@@ -1,0 +1,45 @@
+<style type="text/css">
+#doc {margin:1em;}
+#doc ul li {margin:0.5em;}
+#tab1 td {padding-right:15px;}
+</style>
+<div id="doc">
+<div class="h6">Documentation</div>
+<p>
+
+<ul>
+	<li>No configuration is needed</li>
+	<li>No third party libraries are involved</li>
+	<li>Include in the page head: <code>&lt;script type="text/javascript" src="vkbeautify.js"&gt;&lt;/script&gt;</code>
+
+	<li>Usage format: <code>vkbeautify(text, format [,preserveWS] );</code>
+		
+	</li>
+	<li>Parameters:
+		<ul>
+			<li><code>@text</code>   - String; XML or JSON text to beatufy;</li>
+			<li><code>@format</code> - String; can be either 'xml' or 'json';</li>
+			<li><code>@preserveWS</code> - Bool; [optional] flag, which instruct application do not remove extra white spaces( which is done by default) <br/><br/>
+			<table id="tab1">
+			<tr><td>Example:</td></tr>
+			<tr><td><code>original text:</code></td><td> <code> &lt;elm&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/elm&gt;</code>  </td></tr>
+			<tr><td><code>preserveWS is undefined or false:</code></td><td><code> &lt;elm&gt; &lt;/elm&gt;</code> </td></tr>
+			<tr><td><code>preserveWS is true:</code></td><td> <code> &lt;elm&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/elm&gt;</code>  </td></tr>
+			</table>
+			<br/><br/>
+			</li>
+		</ul>
+	</li>
+	
+	<li>Usage Examples:
+		<ul>
+			<li><code>vkbeautify(text, 'xml');</code> </li>
+			<li><code>vkbeautify(text, 'json');</code> </li>
+			<li><code>vkbeautify(text, 'xml', true);</code>//Preserve whitespaces </li>
+			<li><code>vkbeautify(text, 'xml', true);</code>//Preserve whitespaces </li>
+		</ul>
+	</li>
+</ul>
+
+</p>
+</div>

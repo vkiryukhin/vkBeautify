@@ -1,0 +1,30 @@
+/**
+* vkBeautify - javascript plugin
+*  
+* Version - 0.9.beta 
+* Copyright (c) 2012 Vadim Kiryukhin
+* vkiryukhin @ gmail.com
+* http://www.eslinstructor.net/vkbeautifyxml/
+* 
+* Dual licensed under the MIT and GPL licenses:
+*   http://www.opensource.org/licenses/mit-license.php
+*   http://www.gnu.org/licenses/gpl.html
+*
+*	vkbeautify(text, 'xml'|'json' [,collapseWS ]) 
+*
+* PARAMETERS:
+*
+*	@text  			- String, text to beautify;
+*	@format 		- String, 'xml' or 'json'
+* 	@preserveWS		- Bool (optional);
+*					  flag, which instruct application don't 
+*   				  remove extra white spaces within @text; 
+*	
+* USAGE:
+*	
+*	vkbeautify(text, 'xml'); 
+*	vkbeautify(text, 'xml', true); 
+*	vkbeautify(text, 'json'); 
+*	vkbeautify(text, 'json', true); 
+*
+*/
