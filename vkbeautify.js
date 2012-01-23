@@ -19,6 +19,8 @@
 * 	@preserveWS		- Bool (optional);
 *					  flag, which instruct application don't 
 *   				  remove extra white spaces within @text; 
+*
+*	Return - String
 *	
 * USAGE:
 *	
