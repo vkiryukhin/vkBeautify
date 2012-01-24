@@ -54,7 +54,7 @@ window.vkbeautify = function(text, format, preserveWS) {
 	if(format == 'xml') {
 	
 		ar = preserveWS ? text.replace(/</g,"~#~<").split('~#~') 
-						: text.replace(/>\s{0,}</g,"> <").replace(/</g,"~#~<").split('~#~');
+						: text.replace(/>\s{0,}</g,"><").replace(/</g,"~#~<").split('~#~');
 		len = ar.length;
 
 		for(ix=0;ix<len;ix++) {
