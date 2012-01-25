@@ -1,5 +1,5 @@
 /**
-* vkBeautify - javascript plugin
+* vkBeautify - nodejs plugin
 *  
 * Version - 0.9.beta 
 * Copyright (c) 2012 Vadim Kiryukhin
@@ -31,9 +31,7 @@
 *
 */
 
-(function() {
-
-window.vkbeautify = function(text, format, preserveWS) {
+exports.vkbeautify = function(text, format, preserveWS) {
 
 	var shift = ['\n'], // array of shifts
 	    deep = 0,
@@ -140,5 +138,4 @@ window.vkbeautify = function(text, format, preserveWS) {
 	}
 }
 
-})();
 
