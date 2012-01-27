@@ -56,10 +56,10 @@ window.vkbeautify = function(text, format, preserveWS) {
 		ar = preserveWS ? text.replace(/</g,"~#~<").split('~#~') 
 						: text.replace(/>\s{0,}</g,"><").replace(/</g,"~#~<").split('~#~');
 		len = ar.length;
-
+console.log(ar);
 		for(ix=0;ix<len;ix++) {
 			/* start comment or <![CDATA[...]]> or <!DOCTYPE*/
-			if(ar[ix].search(/<!/) > -1) { 
+			if(ar[ix].search(/<!--/) > -1 || ar[ix].search(/<!\[/) > -1 || ar[ix].search(/<!DOCTYPE/) > -1) { 
 				str += shift[deep]+ar[ix];
 				inComment = true; 
 				/* end comment  or <![CDATA[...]]> */
@@ -70,7 +70,12 @@ window.vkbeautify = function(text, format, preserveWS) {
 			/* end comment  or <![CDATA[...]]> */
 			if(ar[ix].search(/-->/) > -1 || ar[ix].search(/\]>/) > -1) { 
 				str += ar[ix];
-				inComment = false; 
+				if(inComment) {
+					inComment = false;
+				} else {
+					deep++; 
+				}
+				
 			} else 
 			/* <elm></elm> */
 			if( /^<\w/.exec(ar[ix-1]) && /^<\/\w/.exec(ar[ix]) &&
