@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin
 *  
-* Version - 0.9.beta 
+* Version - 0.92.beta 
 * Copyright (c) 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautifyxml/
@@ -56,7 +56,6 @@ window.vkbeautify = function(text, format, preserveWS) {
 		ar = preserveWS ? text.replace(/</g,"~#~<").split('~#~') 
 						: text.replace(/>\s{0,}</g,"><").replace(/</g,"~#~<").split('~#~');
 		len = ar.length;
-console.log(ar);
 		for(ix=0;ix<len;ix++) {
 			/* start comment or <![CDATA[...]]> or <!DOCTYPE*/
 			if(ar[ix].search(/<!--/) > -1 || ar[ix].search(/<!\[/) > -1 || ar[ix].search(/<!DOCTYPE/) > -1) { 
@@ -73,6 +72,9 @@ console.log(ar);
 				if(inComment) {
 					inComment = false;
 				} else {
+					/* "inComment" flag is not set, which means that this token is not the end 
+					 * of a comment, but simply part of a regular text (complain from SOAP developer)
+					 */
 					deep++; 
 				}
 				

@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin
 *  
-* Version - 0.9.beta 
+* Version - 0.92.beta 
 * Copyright (c) 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautifyxml/
@@ -20,7 +20,7 @@
 *					  flag, which instruct application don't 
 *   				  remove extra white spaces within @text; 
 *
-*	Return  - String
+*	Return - String
 *	
 * USAGE:
 *	
