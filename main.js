@@ -17,6 +17,9 @@ function beatify() {
 	} else 
 	if($('#mode').html() == 'JSON') {
 		ta.value =  preservws ? vkbeautify(ta.value, 'json', true) : vkbeautify(ta.value, 'json');
+	} else 
+	if($('#mode').html() == 'CSS') {
+		ta.value =  preservws ? vkbeautify(ta.value, 'css', true) : vkbeautify(ta.value, 'css');
 	} 
 }
 
@@ -105,14 +108,14 @@ function loadTemplate(name)
 			$('#leftpanel').show();
 			document.getElementById('ta').value = '{"menu":{"id": "file","value": "File","popup":{"menuitem":[{"value":"New",'
 													+'"onclick":"CreateNewDoc()"},{"value":"Close","onclick":"CloseDoc()"}]}}}';
-			$('#rightpanel').empty().load('html/basicjson.html');
+			$('#rightpanel').empty().load('html/basic.html');
 			$('#mode').html('JSON');
 			break;
 		case 'preservewsjson':
 			$('#ta').width(400);
 			$('#leftpanel').show();
 			document.getElementById('ta').value = '{    "value":"foo          bar"   }';
-			$('#rightpanel').empty().load('html/collapsewsjson.html');
+			$('#rightpanel').empty().load('html/collapsews.html');
 			$('#mode').html('JSON');
 			break;
 			
@@ -131,6 +134,31 @@ function loadTemplate(name)
 			getWebService('http://ajax.googleapis.com/ajax/services/search/news?v=1.0&q=obama');
 			$('#rightpanel').empty();
 			$('#mode').html('JSON');
+			break;
+			
+			
+		case 'basiccss':
+			$('#ta').width(400);
+			$('#leftpanel').show();
+			document.getElementById('ta').value = '.headbg{margin:0 8px } a:link,a:focus{   color:#00c } a:active{   color:red }';
+			$('#rightpanel').empty().load('html/basic.html');
+			$('#mode').html('CSS');
+			break;
+		case 'preservewscss':
+			$('#ta').width(400);
+			$('#leftpanel').show();
+			document.getElementById('ta').value = 'a:link,       a:focus{   color:    #00c } a:active{   color:red }';
+			$('#rightpanel').empty().load('html/collapsews.html');
+			$('#mode').html('CSS');
+			break;
+			
+		case 'yahoocss':
+			$('#ta').width(800);
+			$('#leftpanel').show();
+			document.getElementById('ta').value = 'Loading Google CSS . . . ';
+			getWebService('http://ssl.gstatic.com/codesite/ph/3604335043632762799/css/core.css');
+			$('#rightpanel').empty();
+			$('#mode').html('CSS');
 			break;
 	}
 }

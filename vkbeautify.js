@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin
 *  
-* Version - 0.9.beta 
+* Version - 0.93.beta 
 * Copyright (c) 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautifyxml/
@@ -10,12 +10,12 @@
 *   http://www.opensource.org/licenses/mit-license.php
 *   http://www.gnu.org/licenses/gpl.html
 *
-*	vkbeautify(text, 'xml'|'json' [,preserveWS ]) 
+*	vkbeautify(text, 'xml'|'json'|'css' [,preserveWS ]) 
 *
 * PARAMETERS:
 *
 *	@text  			- String, text to beautify;
-*	@format 		- String, 'xml' or 'json'
+*	@format 		- String, 'xml' or 'json' or 'css'
 * 	@preserveWS		- Bool (optional);
 *					  flag, which instruct application don't 
 *   				  remove extra white spaces within @text; 
@@ -28,6 +28,8 @@
 *	vkbeautify(text, 'xml', true); 
 *	vkbeautify(text, 'json'); 
 *	vkbeautify(text, 'json', true); 
+*	vkbeautify(text, 'css'); 
+*	vkbeautify(text, 'css', true); 
 *
 */
 
@@ -130,6 +132,32 @@ window.vkbeautify = function(text, format, preserveWS) {
 			if( /\]/.exec(ar[ix]))  { 
 				str += shift[--deep]+ar[ix];
 			}  else 
+			if( /\}/.exec(ar[ix]))  { 
+				str += shift[--deep]+ar[ix];
+			} else {
+				str += shift[deep]+ar[ix];
+			}
+		}
+		return str.replace(/^\n{1,}/,'');
+	}
+	
+	if(format == 'css') {
+	
+		jsonStr = preserveWS ? text : jsonStr = text.replace(/\s{1,}/g,' ') 
+		
+		ar = jsonStr.replace(/\{/g,"{~#~")
+					.replace(/\}/g,"~#~}~#~")
+					.replace(/\;/g,";~#~")
+					.split('~#~');
+					
+		len = ar.length;
+		
+		for(ix=0;ix<len;ix++) {
+
+			if( /\{/.exec(ar[ix]))  { 
+				str += shift[deep++]+ar[ix];
+			} else 
+
 			if( /\}/.exec(ar[ix]))  { 
 				str += shift[--deep]+ar[ix];
 			} else {

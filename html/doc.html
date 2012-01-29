@@ -17,8 +17,8 @@
 	</li>
 	<li>Parameters:
 		<ul>
-			<li><code>@text</code>   - String; XML or JSON text to beatufy;</li>
-			<li><code>@format</code> - String; can be either <code>'xml'</code> or <code>'json'</code>;</li>
+			<li><code>@text</code>   - String; XML, JSON or CSS text to beatufy;</li>
+			<li><code>@format</code> - String; can be  <code>'xml'</code> | <code>'json'</code> | <code>'css'</code>;</li>
 			<li><code>@preserveWS</code> - Bool; [optional] flag, which instruct application do not remove extra white spaces( which is done by default) <br/><br/>
 			<table id="tab1">
 			<tr><td>Example:</td></tr>
@@ -37,10 +37,12 @@
 	
 	<li>Usage Examples:
 		<ul>
-			<li><code>vkbeautify(text, 'xml');</code> </li>
+			<li><code>vkbeautify(text, 'xml' );</code> </li>
 			<li><code>vkbeautify(text, 'json');</code> </li>
-			<li><code>vkbeautify(text, 'xml', true);</code>//Preserve whitespaces </li>
-			<li><code>vkbeautify(text, 'xml', true);</code>//Preserve whitespaces </li>
+			<li><code>vkbeautify(text, 'css' );</code> </li>
+			<li><code>vkbeautify(text, 'xml',  true);</code>//Preserve whitespaces </li>
+			<li><code>vkbeautify(text, 'json', true);</code>//Preserve whitespaces </li>
+			<li><code>vkbeautify(text, 'css',  true);</code>//Preserve whitespaces </li>
 		</ul>
 	</li>
 </ul>

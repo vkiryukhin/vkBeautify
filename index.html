@@ -39,20 +39,28 @@
 	<ul>
 		<!--li onclick="loadTemplate('test')">test</li-->
 		<li onclick="loadTemplate('basic')">Basic</li>
-		<li onclick="loadTemplate('comment')">Comment / [CDATA]</li>
+		<!--li onclick="loadTemplate('comment')">Comment / [CDATA]</li-->
 		<li onclick="loadTemplate('alltogether')">All Together</li>
 		<li onclick="loadTemplate('preservews')">Preserve Whitespaces</li>
-		<li onclick="loadTemplate('yahoorss')" title='http://weather.yahooapis.com/forecastrss?w=2459115'>Yahoo RSS Example</li>
-		<li onclick="loadTemplate('googlenewsxml')" title='http://news.google.com/news?ned=us&topic=h&output=rss'>Google News Example</li>
+		<li onclick="loadTemplate('yahoorss')" title='http://weather.yahooapis.com/forecastrss?w=2459115'>Yahoo Weather RSS</li>
+		<!--li onclick="loadTemplate('googlenewsxml')" title='http://news.google.com/news?ned=us&topic=h&output=rss'>Google News RSS</li-->
 	</ul>
 	<div>&nbsp;&nbsp;<b>JSON</b></div>
 	<ul>
 		<!--li onclick="loadTemplate('test')">test</li-->
 		<li onclick="loadTemplate('basicjson')">Basic</li>
 		<li onclick="loadTemplate('preservewsjson')">Preserve Whitespaces</li>
-		<li onclick="loadTemplate('yahoojson')" title='http://weather.yahooapis.com/forecastjson?w=2459115'>Yahoo RSS Example</li>
-		<li onclick="loadTemplate('googlenewsjson')" title='https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q=barack%20obama'>Google News Example</li>
+		<li onclick="loadTemplate('yahoojson')" title='http://weather.yahooapis.com/forecastjson?w=2459115'>Yahoo Weather JSON</li>
+		<!--li onclick="loadTemplate('googlenewsjson')" title='https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q=barack%20obama'>Google News JSON</li-->
 	</ul>
+	<div>&nbsp;&nbsp;<b>CSS</b></div>
+	<ul>
+		<!--li onclick="loadTemplate('test')">test</li-->
+		<li onclick="loadTemplate('basiccss')">Basic</li>
+		<li onclick="loadTemplate('preservewscss')">Preserve Whitespaces</li>
+		<li onclick="loadTemplate('yahoocss')" title='http://ssl.gstatic.com/codesite/ph/3604335043632762799/css/core.css'>Google CSS Example</li>
+	</ul>
+	
 </div> <!-- /menu -->
 
 <!-- ================= right panel ======================= -->
@@ -65,7 +73,10 @@
 			<div>
 				<input type="button" onclick="beatify()" value="Format"/>
 				<input type="button" onclick="document.getElementById('ta').value='';" value="Clear"/>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="preservews" type="checkbox" /> Preserve Whitespaces
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="preservews" type="checkbox" /> 
+				<span>
+					Preserve Whitespaces
+				<span>
 			</div>
 		</div>
 		
