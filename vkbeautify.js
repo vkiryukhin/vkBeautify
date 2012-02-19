@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin to pretty-print or minify text in XML, JSON and CSS formats.
 *  
-* Version - 0.95.beta 
+* Version - 0.95.01.beta 
 * Copyright (c) 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautify/
@@ -107,21 +107,17 @@ vkbeautify.prototype.json = function(text) {
 
 	var ar = text.replace(/\s{0,}\{\s{0,}/g,"{")
 				.replace(/\s{0,}\[$/g,"[")
-				
 				.replace(/\[\s{0,}/g,"[")
-				
 		  		.replace(/\s{0,}\}\s{0,}/g,"}")
 				.replace(/\s{0,}\]\s{0,}/g,"]")
 				.replace(/\"\s{0,}\,/g,'",')
 				.replace(/\,\s{0,}\"/g,',"')
 				.replace(/\"\s{0,}:/g,'":')
 				.replace(/:\s{0,}\"/g,':"')
+				.replace(/:\s{0,}\[/g,':[')
 				
 				.replace(/\{/g,"~#~{~#~")
-				
-				//.replace(/\[$/g,"[~#~")
 				.replace(/\[/g,"[~#~")
-				
 				.replace(/\}/g,"~#~}")
 				.replace(/\]/g,"~#~]")
 				.replace(/\"\,/g,'",~#~')
@@ -197,9 +193,8 @@ vkbeautify.prototype.jsonmin = function(text) {
 								  
 	return  text.replace(/\s{0,}\{\s{0,}/g,"{")
 				.replace(/\s{0,}\[$/g,"[")
-				
 				.replace(/\[\s{0,}/g,"[")
-				
+				.replace(/:\s{0,}\[/g,':[')
 		  		.replace(/\s{0,}\}\s{0,}/g,"}")
 				.replace(/\s{0,}\]\s{0,}/g,"]")
 				.replace(/\"\s{0,}\,/g,'",')
