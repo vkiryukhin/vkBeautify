@@ -77,7 +77,7 @@ function loadTemplate(name)
 												+ '<!DOCTYPE foo SYSTEM "Foo.dtd"><a><b>bbb</b><c/>'
 												+ '<d><!-- comment --></d><e><![CDATA[ <z></z> ]]>'
 												+ '</e><f><g>   </g></f></a>';
-			$('#rightpanel').empty().load('html/alltogether.html');
+			$('#rightpanel').empty().load('html/basic.html');
 			$('#mode').html('XML');
 			countChars();
 			break;

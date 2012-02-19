@@ -10,40 +10,33 @@
 <ul>
 	<li>No configuration is needed</li>
 	<li>No third party libraries are involved</li>
-	<li><b>nodeJS</b> versions of this plugin is available at GitHub "nodejs" branch. </li>
+	<!--li><b>nodeJS</b> versions of this plugin is available at GitHub "nodejs" branch. </li-->
 	<li>Include in the page head: <code>&lt;script type="text/javascript" src="vkbeautify.js"&gt;&lt;/script&gt;</code>
 
-	<li>Usage format: <code>vkbeautify(text, format [,preserveWS] );</code>
-		
+	<li>Usage:
+		<ul>
+		<li>Pretty print: <code>vkbeautify.xml|json|css(text);</code></li>
+		<li>Minify: <code>vkbeautify.xmlmin|jsonmin|cssmin(text [,preserveComments]);</code></li>
+		</ul>
 	</li>
 	<li>Parameters:
 		<ul>
 			<li><code>@text</code>   - String; XML, JSON or CSS text to beatufy;</li>
-			<li><code>@format</code> - String; can be  <code>'xml'</code> | <code>'json'</code> | <code>'css'</code>;</li>
-			<li><code>@preserveWS</code> - Bool; [optional] flag, which instruct application do not remove extra white spaces( which is done by default) <br/><br/>
-			<table id="tab1">
-			<tr><td>Example:</td></tr>
-			<tr><td><code>original text:</code></td><td> <code> &lt;elm&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/elm&gt;</code>  </td></tr>
-			<tr><td><code>preserveWS is undefined or false:</code></td><td><code> &lt;elm&gt; &lt;/elm&gt;</code> </td></tr>
-			<tr><td><code>preserveWS is true:</code></td><td> <code> &lt;elm&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/elm&gt;</code>  </td></tr>
-			</table>
-			<br/>
-			</li>
+			<li><code>@preserveComments</code> - Bool; [optional] flag, which is used in minxml and mincss functions only. <br/>
+						  Set this flag to true to prevent removing comments from <code>@text</code>; 
+			<li><code>Return</code> - String</li>
+			
 		</ul>
 	</li>
-	
-	<li>
-		Return: String
-	</li>
-	
-	<li>Usage Examples:
+
+	<li>Usage Examples:<br/>
 		<ul>
-			<li><code>vkbeautify(text, 'xml' );</code> </li>
-			<li><code>vkbeautify(text, 'json');</code> </li>
-			<li><code>vkbeautify(text, 'css' );</code> </li>
-			<li><code>vkbeautify(text, 'xml',  true);</code>//Preserve whitespaces </li>
-			<li><code>vkbeautify(text, 'json', true);</code>//Preserve whitespaces </li>
-			<li><code>vkbeautify(text, 'css',  true);</code>//Preserve whitespaces </li>
+			<li><code>vkbeautify.xml(text);</code> // pretty print XML</li> 
+			<li><code>vkbeautify.json(text);</code>  // pretty print JSON </li>
+			<li><code>vkbeautify.css(text);</code>  // pretty print CSS <br/><br/></li>
+			<li><code>vkbeautify.xmlmin(text [, true]);</code>// minify XML </li>
+			<li><code>vkbeautify.jsonmin(text);</code>// minify JSON </li>
+			<li><code>vkbeautify.cssmin(text[, true]);</code>// minify CSS </li>
 		</ul>
 	</li>
 </ul>
