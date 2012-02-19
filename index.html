@@ -36,20 +36,16 @@
 <!-- ================= left panel ======================= -->
 <div id="menu" >
 	<div>&nbsp;&nbsp;<b>XML</b> </div>
+
 	<ul>
 		<!--li onclick="loadTemplate('test')">test</li-->
 		<li onclick="loadTemplate('basic')">Basic</li>
-		<!--li onclick="loadTemplate('comment')">Comment / [CDATA]</li-->
-		<li onclick="loadTemplate('alltogether')">All Together</li>
-		<li onclick="loadTemplate('preservews')">Preserve Whitespaces</li>
 		<li onclick="loadTemplate('yahoorss')" title='http://weather.yahooapis.com/forecastrss?w=2459115'>Yahoo Weather RSS</li>
-		<!--li onclick="loadTemplate('googlenewsxml')" title='http://news.google.com/news?ned=us&topic=h&output=rss'>Google News RSS</li-->
 	</ul>
 	<div>&nbsp;&nbsp;<b>JSON</b></div>
 	<ul>
 		<!--li onclick="loadTemplate('test')">test</li-->
 		<li onclick="loadTemplate('basicjson')">Basic</li>
-		<li onclick="loadTemplate('preservewsjson')">Preserve Whitespaces</li>
 		<li onclick="loadTemplate('yahoojson')" title='http://weather.yahooapis.com/forecastjson?w=2459115'>Yahoo Weather JSON</li>
 		<!--li onclick="loadTemplate('googlenewsjson')" title='https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q=barack%20obama'>Google News JSON</li-->
 	</ul>
@@ -57,7 +53,6 @@
 	<ul>
 		<!--li onclick="loadTemplate('test')">test</li-->
 		<li onclick="loadTemplate('basiccss')">Basic</li>
-		<li onclick="loadTemplate('preservewscss')">Preserve Whitespaces</li>
 		<li onclick="loadTemplate('yahoocss')" title='http://ssl.gstatic.com/codesite/ph/3604335043632762799/css/core.css'>Google CSS Example</li>
 	</ul>
 	
@@ -68,15 +63,19 @@
 	<div id="content"> 
 
 		<div id="leftpanel">
-			<div id="mode">XML</div>
-			<textarea id="ta" style="height:300px;"></textarea>
+			<div id="mode">XML  </div> 	
+			 <div style="float:left; margin-left:7em;"><input id="count" type="text" size="5" /> chars</div><br clear="all"/>
+			<textarea id="ta" style="height:300px;" onclick="countChars()"></textarea>
 			<div>
-				<input type="button" onclick="beatify()" value="Format"/>
+				<input type="button" onclick="beatify()" value="Pretty Print"/>
+				<span style="display:inline-block;border:solid 1px #cccccc;padding:5px;margin-left:2em;margin-right:2em;">
+					<input type="button" onclick="minify()" value="Minify"/>
+					<input id="preservews" type="checkbox" /> 
+					<span style="display:inline-block;width:7em; margin:0px;font-size:75%;">
+						Preserve Comments
+					</span>
+				</span>
 				<input type="button" onclick="document.getElementById('ta').value='';" value="Clear"/>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="preservews" type="checkbox" /> 
-				<span>
-					Preserve Whitespaces
-				<span>
 			</div>
 		</div>
 		

@@ -1,26 +1,41 @@
 
 $(document).ready(function()
 {
-	//$('#leftpanel').empty().load('tmpl/overview.tmpl');
-	//document.getElementById('collapsews').checked = true;
 	$('#leftpanel').hide();
 	$('#rightpanel').empty().load('html/overview.html');
-
-
 });
 
 function beatify() {
 	var ta = document.getElementById('ta');
-	var preservws = document.getElementById('preservews').checked;
 	if($('#mode').html() == 'XML') {
-		ta.value =  preservws ? vkbeautify(ta.value, 'xml', true) : vkbeautify(ta.value, 'xml');
+		ta.value =  vkbeautify.xml(ta.value);
 	} else 
 	if($('#mode').html() == 'JSON') {
-		ta.value =  preservws ? vkbeautify(ta.value, 'json', true) : vkbeautify(ta.value, 'json');
+		ta.value =  vkbeautify.json(ta.value);
 	} else 
 	if($('#mode').html() == 'CSS') {
-		ta.value =  preservws ? vkbeautify(ta.value, 'css', true) : vkbeautify(ta.value, 'css');
+		ta.value =  vkbeautify.css(ta.value);
 	} 
+	countChars();
+}
+
+function minify() {
+	var ta = document.getElementById('ta');
+	var preservecomm = document.getElementById('preservews').checked;
+	if($('#mode').html() == 'XML') {
+		ta.value = preservecomm ? vkbeautify.xmlmin(ta.value,true) : vkbeautify.xmlmin(ta.value);
+	} else 
+	if($('#mode').html() == 'JSON') {
+		ta.value =  preservecomm ? vkbeautify.jsonmin(ta.value) : vkbeautify.jsonmin(ta.value);
+	} else 
+	if($('#mode').html() == 'CSS') {
+		ta.value =  preservecomm ? vkbeautify.cssmin(ta.value,true) : vkbeautify.cssmin(ta.value);
+	} 
+	countChars();
+}
+
+function countChars(){
+	document.getElementById('count').value = document.getElementById('ta').value.length;
 }
 
 function getWebService(url) {
@@ -30,6 +45,7 @@ function getWebService(url) {
 		dataType: "text",
 		success: function(data) { 
 			document.getElementById('ta').value = data;
+			countChars();
 		}
 	});
 
@@ -57,33 +73,13 @@ function loadTemplate(name)
 		case 'basic':
 			$('#ta').width(400);
 			$('#leftpanel').show();
-			document.getElementById('ta').value = '<a><b><c>ccc</c><d/></b></a>';
-			$('#rightpanel').empty().load('html/basic.html');
-			$('#mode').html('XML');
-			break;
-		case 'comment':
-			$('#ta').width(400);
-			$('#leftpanel').show();
-			document.getElementById('ta').value = '<a><!-- comment > <> /> --><![CDATA[ > <> /> ]]></a>';
-			$('#rightpanel').empty().load('html/comment.html');
-			$('#mode').html('XML');
-			break;
-		case 'alltogether':
-			$('#ta').width(400);
-			$('#leftpanel').show();
 			document.getElementById('ta').value = '<?xml version="1.0" encoding="UTF-8" ?>'
-												+ '<!DOCTYPE foo SYSTEM "Foo.dtd"><a>aaa<b>bbb</b><c/>'
+												+ '<!DOCTYPE foo SYSTEM "Foo.dtd"><a><b>bbb</b><c/>'
 												+ '<d><!-- comment --></d><e><![CDATA[ <z></z> ]]>'
 												+ '</e><f><g>   </g></f></a>';
 			$('#rightpanel').empty().load('html/alltogether.html');
 			$('#mode').html('XML');
-			break;
-		case 'preservews':
-			$('#ta').width(400);
-			$('#leftpanel').show();
-			document.getElementById('ta').value = '<a><b>     </b></a>';
-			$('#rightpanel').empty().load('html/collapsews.html');
-			$('#mode').html('XML');
+			countChars();
 			break;
 		case 'yahoorss':
 			$('#ta').width(800);
@@ -100,25 +96,20 @@ function loadTemplate(name)
 			getWebService('http://news.google.com/news?ned=us&topic=h&output=rss');
 			$('#rightpanel').empty();
 			$('#mode').html('XML');
+			countChars();
 			break;
 			
 			
 		case 'basicjson':
 			$('#ta').width(400);
 			$('#leftpanel').show();
-			document.getElementById('ta').value = '{"menu":{"id": "file","value": "File","popup":{"menuitem":[{"value":"New",'
+			document.getElementById('ta').value = '{"menu":{"id": "file","value": [1,2,3],"popup":{"menuitem":[{"value":["one","two"],'
 													+'"onclick":"CreateNewDoc()"},{"value":"Close","onclick":"CloseDoc()"}]}}}';
 			$('#rightpanel').empty().load('html/basic.html');
 			$('#mode').html('JSON');
+			countChars();
 			break;
-		case 'preservewsjson':
-			$('#ta').width(400);
-			$('#leftpanel').show();
-			document.getElementById('ta').value = '{    "value":"foo          bar"   }';
-			$('#rightpanel').empty().load('html/collapsews.html');
-			$('#mode').html('JSON');
-			break;
-			
+
 		case 'yahoojson':
 			$('#ta').width(800);
 			$('#leftpanel').show();
@@ -134,22 +125,15 @@ function loadTemplate(name)
 			getWebService('http://ajax.googleapis.com/ajax/services/search/news?v=1.0&q=obama');
 			$('#rightpanel').empty();
 			$('#mode').html('JSON');
-			break;
-			
+			break;			
 			
 		case 'basiccss':
 			$('#ta').width(400);
 			$('#leftpanel').show();
-			document.getElementById('ta').value = '.headbg{margin:0 8px } a:link,a:focus{   color:#00c } a:active{   color:red }';
+			document.getElementById('ta').value = '.headbg{margin:0 8px /*display:none*/ } a:link,a:focus{   color:#00c } a:active{   color:red }';
 			$('#rightpanel').empty().load('html/basic.html');
 			$('#mode').html('CSS');
-			break;
-		case 'preservewscss':
-			$('#ta').width(400);
-			$('#leftpanel').show();
-			document.getElementById('ta').value = 'a:link,       a:focus{   color:    #00c } a:active{   color:red }';
-			$('#rightpanel').empty().load('html/collapsews.html');
-			$('#mode').html('CSS');
+			countChars();
 			break;
 			
 		case 'yahoocss':
@@ -161,4 +145,5 @@ function loadTemplate(name)
 			$('#mode').html('CSS');
 			break;
 	}
+
 }
