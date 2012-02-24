@@ -16,6 +16,9 @@ function beatify() {
 	if($('#mode').html() == 'CSS') {
 		ta.value =  vkbeautify.css(ta.value);
 	} 
+	if($('#mode').html() == 'SQL') {
+		ta.value =  vkbeautify.sql(ta.value);
+	} 
 	countChars();
 }
 
@@ -30,6 +33,9 @@ function minify() {
 	} else 
 	if($('#mode').html() == 'CSS') {
 		ta.value =  preservecomm ? vkbeautify.cssmin(ta.value,true) : vkbeautify.cssmin(ta.value);
+	}  else 
+	if($('#mode').html() == 'SQL') {
+		ta.value =  vkbeautify.sqlmin(ta.value);
 	} 
 	countChars();
 }
@@ -144,6 +150,16 @@ function loadTemplate(name)
 			$('#rightpanel').empty();
 			$('#mode').html('CSS');
 			break;
+			
+		case 'basicsql':
+			$('#ta').width(800);
+			$('#leftpanel').show();
+			document.getElementById('ta').value = 'SELECT aaa from bbb where ccc="ddd"';
+			//$('#rightpanel').empty().load('html/basic.html');
+			$('#rightpanel').empty();
+			$('#mode').html('SQL');
+			countChars();
+			break;	
 	}
 
 }
