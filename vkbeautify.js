@@ -184,8 +184,57 @@ vkbeautify.prototype.css = function(text) {
 		return str.replace(/^\n{1,}/,'');
 }
 
-function replace_sql(str) {
+function split_sql(str) {
 
+	return str.replace(/\s{1,}/g," ")
+				//.replace(/~#~/g," ")
+				//.replace(/\,/ig,",~#~")
+				
+				.replace(/ AND /ig,"~#~\tAND ")
+				.replace(/ BETWEEN /ig,"~#~BETWEEN ")
+				.replace(/ CASE /ig,"~#~CASE ")
+				.replace(/ FROM /ig,"~#~FROM ")
+				.replace(/ GROUP\s{1,}BY/ig,"~#~GROUP BY ")
+				.replace(/ HAVING /ig,"~#~HAVING ")
+				.replace(/ IN /ig,"~#~IN ")
+				.replace(/ JOIN /ig,"~#~JOIN ")
+				.replace(/ CROSS\s{1,}JOIN /ig,"~#~CROSS JOIN ")
+				.replace(/ INNER\s{1,}JOIN /ig,"~#~INNER JOIN ")
+				.replace(/ LEFT\s{1,}JOIN /ig,"~#~LEFT JOIN ")
+				.replace(/ RIGHT\s{1,}JOIN /ig,"~#~RIGHT JOIN ")
+				.replace(/ LIKE /ig,"~#~LIKE ")
+				.replace(/ ON /ig,"~#~ON ")
+				.replace(/ OR /ig,"~#~\tOR ")
+				.replace(/ ORDER\s{1,}BY/ig,"~#~ORDER BY ")
+				
+				.replace(/\s{0,}SELECT /ig,"~#~SELECT ")
+				//.replace(/\s{0,}SELECT /ig,"SELECT~#~")
+				
+				.replace(/ UNION /ig,"~#~UNION~#~")
+				.replace(/ USING /ig,"~#~USING ")
+				.replace(/ WHEN /ig,"~#~WHEN ")
+				.replace(/ WHERE /ig,"~#~WHERE ")
+				.replace(/ WITH /ig,"~#~WITH ")
+				
+				.replace(/\,\s{0,}\(/ig,",~#~( ")
+				//.replace(/\,/ig,",~#~")
+				//.replace(/ \)\s{0,}\,/ig,"),\n ")
+				//.replace(/\)/ig,")~#~ ")
+				//.replace(/\'/ig,"~#~\'")
+
+				.replace(/ All /ig," ALL ")
+				.replace(/ AS /ig," AS ")
+				.replace(/ ASC /ig," ASC ")	
+				.replace(/ DESC /ig," DESC ")	
+				.replace(/ DISTINCT /ig,"\DISTINCT ")
+				.replace(/ EXISTS /ig," EXISTS ")
+				.replace(/ NOT /ig," NOT ")
+				.replace(/ NULL /ig," NULL ")
+							
+				.replace(/~#~{1,}/g,"~#~")
+				.split('~#~');
+
+/*
 	return str.replace(/\s{1,}/g," ")
 				//.replace(/~#~/g," ")
 				.replace(/ AND /ig,"\nAND ")
@@ -225,12 +274,15 @@ function replace_sql(str) {
 				.replace(/ DESC /ig," DESC ")					
 				
 				.replace(/\n{1,}/g,"\n");
+*/
 }
 
 vkbeautify.prototype.sql = function(text) {
-//	var ar = text.replace(/\s{1,}/g," ")
-//				.replace(/\'/ig,"~#~\'")
-//				.split('~#~'),
+
+	var ar_by_quote = text.replace(/\s{1,}/g," ")
+							.replace(/\'/ig,"~#~\'")
+							.split('~#~'),
+/*
 	var ar = text.replace(/\s{1,}/g," ")
 				//.replace(/~#~/g," ")
 				//.replace(/\,/ig,",~#~")
@@ -278,21 +330,47 @@ vkbeautify.prototype.sql = function(text) {
 							
 				.replace(/~#~{1,}/g,"~#~")
 				.split('~#~'),
-
-
-		len = ar.length,
+*/
+		len = ar_by_quote.length,
+		//len = ar.length,
+		ar = [],
 		deep = 0,
 		inComment = true,
+		inQuote = false,
 		str = '',
 		ix = 0;
+	/*	
+		if( /\'/.exec(ar_by_quote[ix]) && inQuote )  { 
+				str += ar_by_quote[ix];
+				inQuote = inQuote ? false : true;	
+		} else {
+			str += replace_sql(ar_by_quote[ix]);
+		}
+	*/	
+		for(ix=0;ix<len;ix++) {
+			if(ix%2) {
+				ar = ar.concat(ar_by_quote[ix]);
+			} else {
+				ar = ar.concat(split_sql(ar_by_quote[ix]));
+			}
+		}
 		
+		len = ar.length;
 		for(ix=0;ix<len;ix++) {
 		
 			if( /SELECT/.exec(ar[ix]))  { 
+				
 				str += this.shift[deep++]+ar[ix];
+				//deep++;
 			} else 
 			if( /FROM/.exec(ar[ix]))  { 
 				str += this.shift[--deep]+ar[ix];
+			} else 
+			if( /\'/.exec(ar[ix]) )  { 
+				//inComment = inComment ? false : true;	
+				
+				str += ar[ix];
+				
 			}
 			else {
 				str += this.shift[deep]+ar[ix];
