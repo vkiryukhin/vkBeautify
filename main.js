@@ -154,7 +154,7 @@ function loadTemplate(name)
 		case 'basicsql':
 			$('#ta').width(800);
 			$('#leftpanel').show();
-			document.getElementById('ta').value = 'SELECT aaa from bbb where ccc="ddd"';
+			document.getElementById('ta').value = "SELECT aaa from bbb where ccc='ddd'";
 			//$('#rightpanel').empty().load('html/basic.html');
 			$('#rightpanel').empty();
 			$('#mode').html('SQL');
