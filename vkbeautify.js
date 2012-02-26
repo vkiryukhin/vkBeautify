@@ -208,6 +208,7 @@ function split_sql(str) {
 				.replace(/ ON /ig,"~#~ON ")
 				.replace(/ OR /ig,"~#~\tOR ")
 				.replace(/ ORDER\s{1,}BY/ig,"~#~ORDER BY ")
+				.replace(/ OVER /ig,"~#~OVER ")
 				
 				//.replace(/\s{0,}SELECT /ig,"~#~SELECT ")
 				//.replace(/\(\s{0,}SELECT /ig," (SELECT ")
@@ -268,6 +269,10 @@ vkbeautify.prototype.sql = function(text) {
 				parenthesisLevel = isSubquery(0, ar[ix]);
 			} else 
 			if( /\'/.exec(ar[ix]) )  { 
+				parenthesisLevel = isSubquery(parenthesisLevel, ar[ix]);
+				if(!parenthesisLevel && deep) {
+					deep--;
+				}
 				str += ar[ix];
 			}
 			else  { 
@@ -276,33 +281,7 @@ vkbeautify.prototype.sql = function(text) {
 				if(!parenthesisLevel && deep) {
 					deep--;
 				}
-				
 			} 
-			
-			//if( /\'/.exec(ar[ix]) )  { 
-			//	str += ar[ix];
-			//}
-			//else {
-			//	str += this.shift[deep]+ar[ix];
-			//}
-			
-			
-		
-/*		
-			if( /SELECT/.exec(ar[ix]))  { 
-				str += this.shift[deep++]+ar[ix];
-				secondTouch = true;
-			} else 
-			if( /FROM/.exec(ar[ix]))  { 
-				str += this.shift[--deep]+ar[ix];
-			} else 
-			if( /\'/.exec(ar[ix]) )  { 
-				str += ar[ix];
-			}
-			else {
-				str += this.shift[deep]+ar[ix];
-			}
-*/
 		}
 
 		str = str.replace(/^\n{1,}/,'')/*.replace(/\n[ \t]{0,}/g,"\n");*/.replace(/\n{1,}/g,"\n");
