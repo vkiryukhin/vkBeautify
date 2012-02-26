@@ -35,14 +35,13 @@
 
 function vkbeautify(){
 	this.shift = ['\n']; // array of shifts
-	//var step = '  ', // 2 spaces
-	this.step = '    ', // 2 spaces
-		maxdeep = 100, // nesting level
+	this.step = '  '; // 4 spaces
+	//this.tab = this.step + this.step;
+	var maxdeep = 100, // nesting level
 		ix = 0;
 
 	// initialize array with shifts //
 	for(ix=0;ix<maxdeep;ix++){
-		//this.shift.push(this.shift[ix]+step); 
 		this.shift.push(this.shift[ix]+this.step); 
 	}
 
@@ -190,39 +189,39 @@ function isSubquery(parenthesisLevel, str) {
 	return  parenthesisLevel - (str.replace(/\(/g,'').length - str.replace(/\)/g,'').length )
 }
 
-function split_sql(str) {
+function split_sql(str, tab) {
 
 	return str.replace(/\s{1,}/g," ")
-				.replace(/ AND /ig,"~#~\tAND ")
-				.replace(/ BETWEEN /ig,"~#~BETWEEN ")
-				.replace(/ CASE /ig,"~#~CASE ")
+				.replace(/ AND /ig,"~#~"+tab+"AND ")
+				.replace(/ BETWEEN /ig,"~#~"+tab+"BETWEEN ")
+				.replace(/ CASE /ig,"~#~"+tab+"CASE ")
+				.replace(/ END /ig,"~#~"+tab+"END ")
 				.replace(/ FROM /ig,"~#~FROM ")
 				.replace(/ GROUP\s{1,}BY/ig,"~#~GROUP BY ")
 				.replace(/ HAVING /ig,"~#~HAVING ")
-				.replace(/ IN /ig,"~#~IN ")
+				.replace(/ IN /ig,"~#~"+tab+"IN ")
 				.replace(/ JOIN /ig,"~#~JOIN ")
 				.replace(/ CROSS\s{1,}JOIN /ig,"~#~CROSS JOIN ")
 				.replace(/ INNER\s{1,}JOIN /ig,"~#~INNER JOIN ")
 				.replace(/ LEFT\s{1,}JOIN /ig,"~#~LEFT JOIN ")
 				.replace(/ RIGHT\s{1,}JOIN /ig,"~#~RIGHT JOIN ")
 				.replace(/ ON /ig,"~#~ON ")
-				.replace(/ OR /ig,"~#~\tOR ")
+				.replace(/ OR /ig,"~#~"+tab+"OR ")
 				.replace(/ ORDER\s{1,}BY/ig,"~#~ORDER BY ")
-				.replace(/ OVER /ig,"~#~OVER ")
+				.replace(/ OVER /ig,"~#~"+tab+"OVER ")
 				
 				//.replace(/\s{0,}SELECT /ig,"~#~SELECT ")
 				//.replace(/\(\s{0,}SELECT /ig," (SELECT ")
 				.replace(/\(\s{0,}SELECT /ig,"~#~(SELECT ")
-				
+				.replace(/ THEN /ig," THEN~#~"+tab+"")
 				.replace(/ UNION /ig,"~#~UNION~#~")
 				.replace(/ USING /ig,"~#~USING ")
-				.replace(/ WHEN /ig,"~#~WHEN ")
+				.replace(/ WHEN /ig,"~#~"+tab+"WHEN ")
 				.replace(/ WHERE /ig,"~#~WHERE ")
 				.replace(/ WITH /ig,"~#~WITH ")
 				
 				//.replace(/\,\s{0,}\(/ig,",~#~( ")
-				
-				.replace(/\,/ig,",~#~\t")
+				.replace(/\,/ig,",~#~"+tab+"")
 
 				.replace(/ All /ig," ALL ")
 				.replace(/ AS /ig," AS ")
@@ -233,6 +232,7 @@ function split_sql(str) {
 				.replace(/ NOT /ig," NOT ")
 				.replace(/ NULL /ig," NULL ")
 				.replace(/ LIKE /ig," LIKE ")
+				.replace(/\s{0,}SELECT /ig,"SELECT ")
 							
 				.replace(/~#~{1,}/g,"~#~")
 				.split('~#~');
@@ -246,6 +246,7 @@ vkbeautify.prototype.sql = function(text) {
 		len = ar_by_quote.length,
 		ar = [],
 		deep = 0,
+		tab = this.step+this.step;
 		inComment = true,
 		inQuote = false,
 		parenthesisLevel = 0,
@@ -256,7 +257,7 @@ vkbeautify.prototype.sql = function(text) {
 			if(ix%2) {
 				ar = ar.concat(ar_by_quote[ix]);
 			} else {
-				ar = ar.concat(split_sql(ar_by_quote[ix]));
+				ar = ar.concat(split_sql(ar_by_quote[ix], tab) );
 			}
 		}
 		
