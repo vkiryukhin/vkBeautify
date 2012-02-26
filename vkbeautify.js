@@ -222,7 +222,7 @@ function split_sql(str) {
 				
 				//.replace(/\,\s{0,}\(/ig,",~#~( ")
 				
-				//.replace(/\,/ig,",~#~")
+				.replace(/\,/ig,",~#~\t")
 
 				.replace(/ All /ig," ALL ")
 				.replace(/ AS /ig," AS ")
