@@ -35,8 +35,7 @@
 
 function vkbeautify(){
 	this.shift = ['\n']; // array of shifts
-	this.step = '  '; // 4 spaces
-	//this.tab = this.step + this.step;
+	this.step = '  '; // 2 spaces
 	var maxdeep = 100, // nesting level
 		ix = 0;
 
@@ -192,9 +191,11 @@ function isSubquery(parenthesisLevel, str) {
 function split_sql(str, tab) {
 
 	return str.replace(/\s{1,}/g," ")
-				.replace(/ AND /ig,"~#~"+tab+"AND ")
+
+				.replace(/ AND /ig,"~#~"+tab+tab+"AND ")
 				.replace(/ BETWEEN /ig,"~#~"+tab+"BETWEEN ")
 				.replace(/ CASE /ig,"~#~"+tab+"CASE ")
+				.replace(/ ELSE /ig,"~#~"+tab+"ELSE ")
 				.replace(/ END /ig,"~#~"+tab+"END ")
 				.replace(/ FROM /ig,"~#~FROM ")
 				.replace(/ GROUP\s{1,}BY/ig,"~#~GROUP BY ")
@@ -206,13 +207,13 @@ function split_sql(str, tab) {
 				.replace(/ LEFT\s{1,}JOIN /ig,"~#~LEFT JOIN ")
 				.replace(/ RIGHT\s{1,}JOIN /ig,"~#~RIGHT JOIN ")
 				.replace(/ ON /ig,"~#~ON ")
-				.replace(/ OR /ig,"~#~"+tab+"OR ")
+				.replace(/ OR /ig,"~#~"+tab+tab+"OR ")
 				.replace(/ ORDER\s{1,}BY/ig,"~#~ORDER BY ")
 				.replace(/ OVER /ig,"~#~"+tab+"OVER ")
-				
-				//.replace(/\s{0,}SELECT /ig,"~#~SELECT ")
-				//.replace(/\(\s{0,}SELECT /ig," (SELECT ")
+
 				.replace(/\(\s{0,}SELECT /ig,"~#~(SELECT ")
+				.replace(/\)\s{0,}SELECT /ig,")~#~SELECT ")
+				
 				.replace(/ THEN /ig," THEN~#~"+tab+"")
 				.replace(/ UNION /ig,"~#~UNION~#~")
 				.replace(/ USING /ig,"~#~USING ")
@@ -221,9 +222,9 @@ function split_sql(str, tab) {
 				.replace(/ WITH /ig,"~#~WITH ")
 				
 				//.replace(/\,\s{0,}\(/ig,",~#~( ")
-				.replace(/\,/ig,",~#~"+tab+"")
+				//.replace(/\,/ig,",~#~"+tab+tab+"")
 
-				.replace(/ All /ig," ALL ")
+				.replace(/ ALL /ig," ALL ")
 				.replace(/ AS /ig," AS ")
 				.replace(/ ASC /ig," ASC ")	
 				.replace(/ DESC /ig," DESC ")	
@@ -238,7 +239,7 @@ function split_sql(str, tab) {
 				.split('~#~');
 }
 
-vkbeautify.prototype.sql = function(text) {
+vkbeautify.prototype.sql = function(text, brakeOnComma) {
 
 	var ar_by_quote = text.replace(/\s{1,}/g," ")
 							.replace(/\'/ig,"~#~\'")
@@ -263,6 +264,10 @@ vkbeautify.prototype.sql = function(text) {
 		
 		len = ar.length;
 		for(ix=0;ix<len;ix++) {
+		
+			if( /\s{0,}\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
+				ar[ix] = ar[ix].replace(/\,/g,",\n"+tab+tab+"")
+			} 
 		
 			if( /\s{0,}\(\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
 				deep++;
