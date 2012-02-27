@@ -35,7 +35,8 @@
 
 function vkbeautify(){
 	this.shift = ['\n']; // array of shifts
-	this.step = '  '; // 2 spaces
+	//this.step = '  '; // 2 spaces
+	this.step = '    '; // 4 spaces
 	var maxdeep = 100, // nesting level
 		ix = 0;
 
@@ -184,7 +185,7 @@ vkbeautify.prototype.css = function(text) {
 
 //----------------------------------------------------------------------------
 
-function isSubquery(parenthesisLevel, str) {
+function isSubquery(str, parenthesisLevel) {
 	return  parenthesisLevel - (str.replace(/\(/g,'').length - str.replace(/\)/g,'').length )
 }
 
@@ -200,13 +201,16 @@ function split_sql(str, tab) {
 				.replace(/ FROM /ig,"~#~FROM ")
 				.replace(/ GROUP\s{1,}BY/ig,"~#~GROUP BY ")
 				.replace(/ HAVING /ig,"~#~HAVING ")
-				.replace(/ IN /ig,"~#~"+tab+"IN ")
+				//.replace(/ IN /ig,"~#~"+tab+"IN ")
+				.replace(/ IN /ig," IN ")
+				
 				.replace(/ JOIN /ig,"~#~JOIN ")
-				.replace(/ CROSS\s{1,}JOIN /ig,"~#~CROSS JOIN ")
-				.replace(/ INNER\s{1,}JOIN /ig,"~#~INNER JOIN ")
-				.replace(/ LEFT\s{1,}JOIN /ig,"~#~LEFT JOIN ")
-				.replace(/ RIGHT\s{1,}JOIN /ig,"~#~RIGHT JOIN ")
-				.replace(/ ON /ig,"~#~ON ")
+				.replace(/ CROSS~#~{1,}JOIN /ig,"~#~CROSS JOIN ")
+				.replace(/ INNER~#~{1,}JOIN /ig,"~#~INNER JOIN ")
+				.replace(/ LEFT~#~{1,}JOIN /ig,"~#~LEFT JOIN ")
+				.replace(/ RIGHT~#~{1,}JOIN /ig,"~#~RIGHT JOIN ")
+				
+				.replace(/ ON /ig,"~#~"+tab+"ON ")
 				.replace(/ OR /ig,"~#~"+tab+tab+"OR ")
 				.replace(/ ORDER\s{1,}BY/ig,"~#~ORDER BY ")
 				.replace(/ OVER /ig,"~#~"+tab+"OVER ")
@@ -247,7 +251,7 @@ vkbeautify.prototype.sql = function(text, brakeOnComma) {
 		len = ar_by_quote.length,
 		ar = [],
 		deep = 0,
-		tab = this.step+this.step;
+		tab = this.step,//+this.step,
 		inComment = true,
 		inQuote = false,
 		parenthesisLevel = 0,
@@ -264,30 +268,33 @@ vkbeautify.prototype.sql = function(text, brakeOnComma) {
 		
 		len = ar.length;
 		for(ix=0;ix<len;ix++) {
-		
+			
+			parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
+			
 			if( /\s{0,}\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
 				ar[ix] = ar[ix].replace(/\,/g,",\n"+tab+tab+"")
 			} 
 		
 			if( /\s{0,}\(\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
 				deep++;
+				//parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
 				str += this.shift[deep]+ar[ix];
-				parenthesisLevel = isSubquery(0, ar[ix]);
 			} else 
 			if( /\'/.exec(ar[ix]) )  { 
-				parenthesisLevel = isSubquery(parenthesisLevel, ar[ix]);
-				if(!parenthesisLevel && deep) {
+				//parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
+				if(parenthesisLevel<1 && deep) {
 					deep--;
 				}
 				str += ar[ix];
 			}
 			else  { 
-				parenthesisLevel = isSubquery(parenthesisLevel, ar[ix]);
+				//parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
 				str += this.shift[deep]+ar[ix];
 				if(parenthesisLevel<1 && deep) {
 					deep--;
 				}
 			} 
+			var junk = 0;
 		}
 
 		str = str.replace(/^\n{1,}/,'')/*.replace(/\n[ \t]{0,}/g,"\n");*/.replace(/\n{1,}/g,"\n");
