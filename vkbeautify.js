@@ -284,7 +284,7 @@ vkbeautify.prototype.sql = function(text, brakeOnComma) {
 			else  { 
 				parenthesisLevel = isSubquery(parenthesisLevel, ar[ix]);
 				str += this.shift[deep]+ar[ix];
-				if(!parenthesisLevel && deep) {
+				if(parenthesisLevel<1 && deep) {
 					deep--;
 				}
 			} 
