@@ -15,13 +15,13 @@
 
 	<li>Usage:
 		<ul>
-		<li>Pretty print: <code>vkbeautify.xml|json|css(text);</code></li>
-		<li>Minify: <code>vkbeautify.xmlmin|jsonmin|cssmin(text [,preserveComments]);</code></li>
+		<li>Pretty print: <code>vkbeautify.xml|json|css|sql(text);</code></li>
+		<li>Minify: <code>vkbeautify.xmlmin|jsonmin|cssmin|sqlmin(text [,preserveComments]);</code></li>
 		</ul>
 	</li>
 	<li>Parameters:
 		<ul>
-			<li><code>@text</code>   - String; XML, JSON or CSS text to beatufy;</li>
+			<li><code>@text</code>   - String; XML, JSON, CSS or SQL text to beatufy;</li>
 			<li><code>@preserveComments</code> - Bool; [optional] flag, which is used in minxml and mincss functions only. <br/>
 						  Set this flag to true to prevent removing comments from <code>@text</code>; 
 			<li><code>Return</code> - String</li>
@@ -31,12 +31,14 @@
 
 	<li>Usage Examples:<br/>
 		<ul>
-			<li><code>vkbeautify.xml(text);</code> // pretty print XML</li> 
-			<li><code>vkbeautify.json(text);</code>  // pretty print JSON </li>
-			<li><code>vkbeautify.css(text);</code>  // pretty print CSS <br/><br/></li>
-			<li><code>vkbeautify.xmlmin(text [, true]);</code>// minify XML </li>
-			<li><code>vkbeautify.jsonmin(text);</code>// minify JSON </li>
-			<li><code>vkbeautify.cssmin(text[, true]);</code>// minify CSS </li>
+			<li><code>vkbeautify.xml(text);</code> // pretty print <b>XML</b></li> 
+			<li><code>vkbeautify.json(text);</code>  // pretty print <b>JSON</b> </li>
+			<li><code>vkbeautify.css(text);</code>  // pretty print <b>CSS</b> </li>
+			<li><code>vkbeautify.sql(text);</code>  // pretty print <b>SQL</b> <br/><br/></li>
+			<li><code>vkbeautify.xmlmin(text [, true]);</code>// minify <b>XML</b> </li>
+			<li><code>vkbeautify.jsonmin(text);</code>// minify <b>JSON</b> </li>
+			<li><code>vkbeautify.cssmin(text[, true]);</code>// minify <b>CSS</b> </li>
+			<li><code>vkbeautify.sqlmin(text);</code>// minify <b>SQL</b> </li>
 		</ul>
 	</li>
 </ul>
