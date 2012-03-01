@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin to pretty-print or minify text in XML, JSON and CSS formats.
 *  
-* Version - 0.95.01.beta 
+* Version - 0.96.00.beta 
 * Copyright (c) 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautify/
@@ -10,8 +10,8 @@
 *   http://www.opensource.org/licenses/mit-license.php
 *   http://www.gnu.org/licenses/gpl.html
 *
-*	vkbeautify.xml|json|css(text ) - pretty print XML, JSON or CSS text;
-*	vkbeautify.xmlmin|jsonmin|cssmin(text, preserveComments ) - minify XML, JSON or CSS text; 
+*	vkbeautify.xml|json|css|sql(text ) - pretty print XML, JSON, CSS or SQL text;
+*	vkbeautify.xmlmin|jsonmin|cssmin|sqlmin(text, preserveComments ) - minify XML, JSON, CSS or SQL text; 
 *
 * PARAMETERS:
 *
@@ -22,12 +22,14 @@
 *	
 * USAGE:
 *	
-*	vkbeautify.xml(text); 
-*	vkbeautify.json(text); 
-*	vkbeautify.css(text); 
-*	vkbeautify.xmlmin( text [, true]); 
-*	vkbeautify.jsonmin(text); 
-*	vkbeautify.cssmin( text [, true]); 
+*	var foo = vkbeautify.xml(text); 
+*	var foo = vkbeautify.json(text); 
+*	var foo = vkbeautify.css(text); 
+*	var foo = vkbeautify.sql(text); 
+*	var foo = vkbeautify.xmlmin( text [, true]); 
+*	var foo = vkbeautify.jsonmin(text); 
+*	var foo = vkbeautify.cssmin( text [, true]); 
+*   var foo = vkbeautify.sqlmin(text); 
 *
 */
 
@@ -35,7 +37,6 @@
 
 function vkbeautify(){
 	this.shift = ['\n']; // array of shifts
-	//this.step = '  '; // 2 spaces
 	this.step = '    '; // 4 spaces
 	var maxdeep = 100, // nesting level
 		ix = 0;
@@ -277,18 +278,15 @@ vkbeautify.prototype.sql = function(text, brakeOnComma) {
 		
 			if( /\s{0,}\(\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
 				deep++;
-				//parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
 				str += this.shift[deep]+ar[ix];
 			} else 
 			if( /\'/.exec(ar[ix]) )  { 
-				//parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
 				if(parenthesisLevel<1 && deep) {
 					deep--;
 				}
 				str += ar[ix];
 			}
 			else  { 
-				//parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
 				str += this.shift[deep]+ar[ix];
 				if(parenthesisLevel<1 && deep) {
 					deep--;
@@ -297,7 +295,7 @@ vkbeautify.prototype.sql = function(text, brakeOnComma) {
 			var junk = 0;
 		}
 
-		str = str.replace(/^\n{1,}/,'')/*.replace(/\n[ \t]{0,}/g,"\n");*/.replace(/\n{1,}/g,"\n");
+		str = str.replace(/^\n{1,}/,'').replace(/\n{1,}/g,"\n");
 		return str;
 }
 
