@@ -1,9 +1,9 @@
 # vkBeautify
 
 javascript  plugin to **pretty-print** or **minify**
-text in **XML**, **JSON** and **CSS** formats.
+text in **XML**, **JSON**, **CSS** and **SQL** formats.
 
-**Version** - 0.95.01.beta
+**Version** - 0.96.00.beta
 
 **Copyright** (c) 2012 Vadim Kiryukhin ( vkiryukhin @ gmail.com )
 
@@ -24,12 +24,16 @@ the MIT and GPL licenses:
 
 * `vkbeautify.css(text )` - pretty print CSS text; 
 
+* `vkbeautify.sql(text )` - pretty print SQL text; 
+
 * `vkbeautify.xmlmin(text [, preserveComments] ` - minify XML
 text; 
 
-* `vkbeautify.jsonmin(text preserveComments)` - minify JSON text;
+* `vkbeautify.jsonmin(text)` - minify JSON text;
 
 * `vkbeautify.cssmin(text [, preserveComments] )` - minify CSS text; 
+
+* `vkbeautify.sqlmin(text)` - minify SQL text;
 
 **PARAMETERS:**
 
@@ -55,4 +59,8 @@ to true to prevent removing comments from @text;
 `var css_pp   = vkbeautify.css(css_text); `
 
 `var css_min  = vkbeautify.cssmin(css\text [, true]);`
+
+`var sql_pp  = vkbeautify.sql(sql_text);` 
+
+`var sql_min = vkbeautify.sqlmin(sql_text);` 
 
