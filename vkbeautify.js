@@ -107,25 +107,15 @@ vkbeautify.prototype.xml = function(text) {
 
 vkbeautify.prototype.json = function(text) {
 
-	var ar = text.replace(/\s{0,}\{\s{0,}/g,"{")
-				.replace(/\s{0,}\[$/g,"[")
-				.replace(/\[\s{0,}/g,"[")
-		  		.replace(/\s{0,}\}\s{0,}/g,"}")
-				.replace(/\s{0,}\]\s{0,}/g,"]")
-				.replace(/\"\s{0,}\,/g,'",')
-				.replace(/\,\s{0,}\"/g,',"')
-				.replace(/\"\s{0,}:/g,'":')
-				.replace(/:\s{0,}\"/g,':"')
-				.replace(/:\s{0,}\[/g,':[')
-				
-				.replace(/\{/g,"~::~{~::~")
-				.replace(/\[/g,"[~::~")
-				.replace(/\}/g,"~::~}")
-				.replace(/\]/g,"~::~]")
-				.replace(/\"\,/g,'",~::~')
-				.replace(/\,\"/g,',~::~"')
-				.replace(/~::~\s{0,}~::~/g,"~::~")
-				.split('~::~'),
+	var ar = this.jsonmin(text).replace(/\{/g,"~::~{~::~")
+								.replace(/\[/g,"[~::~")
+								.replace(/\}/g,"~::~}")
+								.replace(/\]/g,"~::~]")
+								.replace(/\"\,/g,'",~::~')
+								.replace(/\,\"/g,',~::~"')
+								.replace(/\]\,/g,'],~::~')
+								.replace(/~::~\s{0,}~::~/g,"~::~")
+								.split('~::~'),
 				
 		len = ar.length,
 		deep = 0,
@@ -244,7 +234,7 @@ function split_sql(str, tab) {
 				.split('~::~');
 }
 
-vkbeautify.prototype.sql = function(text, brakeOnComma) {
+vkbeautify.prototype.sql = function(text) {
 
 	var ar_by_quote = text.replace(/\s{1,}/g," ")
 							.replace(/\'/ig,"~::~\'")
@@ -318,7 +308,11 @@ vkbeautify.prototype.jsonmin = function(text) {
 				.replace(/\"\s{0,}\,/g,'",')
 				.replace(/\,\s{0,}\"/g,',"')
 				.replace(/\"\s{0,}:/g,'":')
-				.replace(/:\s{0,}\"/g,':"');						  
+				.replace(/:\s{0,}\"/g,':"')
+				.replace(/:\s{0,}\[/g,':[')
+				.replace(/\,\s{0,}\[/g,',[')
+				.replace(/\,\s{2,}/g,', ')
+				.replace(/\]\s{0,},\s{0,}\[/g,'],[');							  
 }
 
 vkbeautify.prototype.cssmin = function(text, preserveComments) {
