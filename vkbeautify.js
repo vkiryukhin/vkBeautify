@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin to pretty-print or minify text in XML, JSON and CSS formats.
 *  
-* Version - 0.96.02.beta 
+* Version - 0.97.00.beta 
 * Copyright (c) 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautify/
@@ -16,6 +16,7 @@
 * PARAMETERS:
 *
 *	@text  				- String; text to beautify;
+*   @step				- Integer; indent size unit (default is 4 spaces) ;
 * 	@preserveComments	- Bool (optional, used in minxml and mincss only); 
 *						  Set this flag to true to prevent removing comments from @text; 
 *	@Return 			- String;
@@ -23,9 +24,9 @@
 * USAGE:
 *	
 *	var foo = vkbeautify.xml(text); 
-*	var foo = vkbeautify.json(text); 
-*	var foo = vkbeautify.css(text); 
-*	var foo = vkbeautify.sql(text); 
+*	var foo = vkbeautify.json(text [,4]); 
+*	var foo = vkbeautify.css(text [,8]); 
+*	var foo = vkbeautify.sql(text [,2]); 
 *	var foo = vkbeautify.xmlmin( text [, true]); 
 *	var foo = vkbeautify.jsonmin(text); 
 *	var foo = vkbeautify.cssmin( text [, true]); 
@@ -35,32 +36,50 @@
 
 (function() {
 
-function vkbeautify(){
-	this.shift = ['\n']; // array of shifts
-	this.step = '    '; // 4 spaces
-	var maxdeep = 100, // nesting level
-		ix = 0;
+function createShiftArr(step) {
 
-	// initialize array with shifts //
-	for(ix=0;ix<maxdeep;ix++){
-		this.shift.push(this.shift[ix]+this.step); 
+	var space = '';
+	switch(step) {
+		case 1: space = ' '; break;
+		case 2: space = '  '; break;
+		case 3: space = '   '; break;
+		case 4: space = '    '; break;
+		case 5: space = '     '; break;
+		case 6: space = '      '; break;
+		case 7: space = '       '; break;
+		case 8: space = '        '; break;
+		case 9: space = '         '; break;
+		case 10: space = '         '; break;
+		case 11: space = '           '; break;
+		default: space = '            '; break;
 	}
 
+	var shift = ['\n']; // array of shifts
+	for(ix=0;ix<100;ix++){
+		shift.push(shift[ix]+space); 
+	}
+	return shift;
+}
+
+function vkbeautify(){
+	this.step = '    '; // 4 spaces
+	this.shift = createShiftArr(4);
 };
 
-vkbeautify.prototype.xml = function(text) {
+vkbeautify.prototype.xml = function(text,step) {
 
 	var ar = text.replace(/>\s{0,}</g,"><").replace(/</g,"~::~<").split('~::~'),
 		len = ar.length,
 		inComment = false,
 		deep = 0,
 		str = '',
-		ix = 0;
+		ix = 0,
+		shift = step ? createShiftArr(step) : this.shift;
 
 		for(ix=0;ix<len;ix++) {
 			// start comment or <![CDATA[...]]> or <!DOCTYPE //
 			if(ar[ix].search(/<!/) > -1) { 
-				str += this.shift[deep]+ar[ix];
+				str += shift[deep]+ar[ix];
 				inComment = true; 
 				// end comment  or <![CDATA[...]]> //
 				if(ar[ix].search(/-->/) > -1 || ar[ix].search(/\]>/) > -1 || ar[ix].search(/!DOCTYPE/) > -1 ) { 
@@ -80,23 +99,23 @@ vkbeautify.prototype.xml = function(text) {
 			} else
 			 // <elm> //
 			if(ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) == -1 && ar[ix].search(/\/>/) == -1 ) {
-				str = !inComment ? str += this.shift[deep++]+ar[ix] : str += ar[ix];
+				str = !inComment ? str += shift[deep++]+ar[ix] : str += ar[ix];
 			} else 
 			 // <elm>...</elm> //
 			if(ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) > -1) {
-				str = !inComment ? str += this.shift[deep]+ar[ix] : str += ar[ix];
+				str = !inComment ? str += shift[deep]+ar[ix] : str += ar[ix];
 			} else 
 			// </elm> //
 			if(ar[ix].search(/<\//) > -1) { 
-				str = !inComment ? str += this.shift[--deep]+ar[ix] : str += ar[ix];
+				str = !inComment ? str += shift[--deep]+ar[ix] : str += ar[ix];
 			} else 
 			// <elm/> //
 			if(ar[ix].search(/\/>/) > -1 ) { 
-				str = !inComment ? str += this.shift[deep]+ar[ix] : str += ar[ix];
+				str = !inComment ? str += shift[deep]+ar[ix] : str += ar[ix];
 			} else 
 			// <? xml ... ?> //
 			if(ar[ix].search(/<\?/) > -1) { 
-				str += this.shift[deep]+ar[ix];
+				str += shift[deep]+ar[ix];
 			} else {
 				str += ar[ix];
 			}
@@ -105,7 +124,7 @@ vkbeautify.prototype.xml = function(text) {
 	return  (str[0] == '\n') ? str.slice(1) : str;
 }
 
-vkbeautify.prototype.json = function(text) {
+vkbeautify.prototype.json = function(text,step) {
 
 	var ar = this.jsonmin(text).replace(/\{/g,"~::~{~::~")
 								.replace(/\[/g,"[~::~")
@@ -120,28 +139,29 @@ vkbeautify.prototype.json = function(text) {
 		len = ar.length,
 		deep = 0,
 		str = '',
-		ix = 0;
+		ix = 0,
+		shift = step ? createShiftArr(step) : this.shift;;
 
 	for(ix=0;ix<len;ix++) {
 		if( /\{/.exec(ar[ix]))  { 
-			str += this.shift[deep++]+ar[ix];
+			str += shift[deep++]+ar[ix];
 		} else 
 		if( /\[/.exec(ar[ix]))  { 
-			str += this.shift[deep++]+ar[ix];
+			str += shift[deep++]+ar[ix];
 		}  else 
 		if( /\]/.exec(ar[ix]))  { 
-			str += this.shift[--deep]+ar[ix];
+			str += shift[--deep]+ar[ix];
 		}  else 
 		if( /\}/.exec(ar[ix]))  { 
-			str += this.shift[--deep]+ar[ix];
+			str += shift[--deep]+ar[ix];
 		} else {
-			str += this.shift[deep]+ar[ix];
+			str += shift[deep]+ar[ix];
 		}
 	}
 	return str.replace(/^\n{1,}/,'');
 }
 
-vkbeautify.prototype.css = function(text) {
+vkbeautify.prototype.css = function(text, step) {
 
 	var ar = text.replace(/\s{1,}/g,' ')
 				.replace(/\{/g,"{~::~")
@@ -154,21 +174,22 @@ vkbeautify.prototype.css = function(text) {
 		len = ar.length,
 		deep = 0,
 		str = '',
-		ix = 0;
+		ix = 0,
+		shift = step ? createShiftArr(step) : this.shift;
 		
 		for(ix=0;ix<len;ix++) {
 
 			if( /\{/.exec(ar[ix]))  { 
-				str += this.shift[deep++]+ar[ix];
+				str += shift[deep++]+ar[ix];
 			} else 
 			if( /\}/.exec(ar[ix]))  { 
-				str += this.shift[--deep]+ar[ix];
+				str += shift[--deep]+ar[ix];
 			} else
 			if( /\*\\/.exec(ar[ix]))  { 
-				str += this.shift[deep]+ar[ix];
+				str += shift[deep]+ar[ix];
 			}
 			else {
-				str += this.shift[deep]+ar[ix];
+				str += shift[deep]+ar[ix];
 			}
 		}
 		return str.replace(/^\n{1,}/,'');
@@ -234,7 +255,7 @@ function split_sql(str, tab) {
 				.split('~::~');
 }
 
-vkbeautify.prototype.sql = function(text) {
+vkbeautify.prototype.sql = function(text,step) {
 
 	var ar_by_quote = text.replace(/\s{1,}/g," ")
 							.replace(/\'/ig,"~::~\'")
@@ -247,7 +268,8 @@ vkbeautify.prototype.sql = function(text) {
 		inQuote = false,
 		parenthesisLevel = 0,
 		str = '',
-		ix = 0;
+		ix = 0,
+		shift = step ? createShiftArr(step) : this.shift;;
 
 		for(ix=0;ix<len;ix++) {
 			if(ix%2) {
@@ -268,7 +290,7 @@ vkbeautify.prototype.sql = function(text) {
 		
 			if( /\s{0,}\(\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
 				deep++;
-				str += this.shift[deep]+ar[ix];
+				str += shift[deep]+ar[ix];
 			} else 
 			if( /\'/.exec(ar[ix]) )  { 
 				if(parenthesisLevel<1 && deep) {
@@ -277,7 +299,7 @@ vkbeautify.prototype.sql = function(text) {
 				str += ar[ix];
 			}
 			else  { 
-				str += this.shift[deep]+ar[ix];
+				str += shift[deep]+ar[ix];
 				if(parenthesisLevel<1 && deep) {
 					deep--;
 				}
