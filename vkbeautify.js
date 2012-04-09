@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin to pretty-print or minify text in XML, JSON and CSS formats.
 *  
-* Version - 0.96.02.beta 
+* Version - 0.97.01.demo
 * Copyright (c) 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautify/
@@ -10,8 +10,8 @@
 *   http://www.opensource.org/licenses/mit-license.php
 *   http://www.gnu.org/licenses/gpl.html
 *
-*	vkbeautify.xml|json|css|sql(text ) - pretty print XML, JSON, CSS or SQL text;
-*	vkbeautify.xmlmin|jsonmin|cssmin|sqlmin(text, preserveComments ) - minify XML, JSON, CSS or SQL text; 
+*	vkbeautify().xml|json|css|sql(text ) - pretty print XML, JSON, CSS or SQL text;
+*	vkbeautify().xmlmin|jsonmin|cssmin|sqlmin(text, preserveComments ) - minify XML, JSON, CSS or SQL text; 
 *
 * PARAMETERS:
 *
@@ -22,14 +22,14 @@
 *	
 * USAGE:
 *	
-*	var foo = vkbeautify.xml(text); 
-*	var foo = vkbeautify.json(text); 
-*	var foo = vkbeautify.css(text); 
-*	var foo = vkbeautify.sql(text); 
-*	var foo = vkbeautify.xmlmin( text [, true]); 
-*	var foo = vkbeautify.jsonmin(text); 
-*	var foo = vkbeautify.cssmin( text [, true]); 
-*   var foo = vkbeautify.sqlmin(text); 
+*	var foo = new vkbeautify().xml(text); 
+*	var foo = new vkbeautify().json(text); 
+*	var foo = new vkbeautify().css(text); 
+*	var foo = new vkbeautify().sql(text); 
+*	var foo = new vkbeautify().xmlmin( text [, true]); 
+*	var foo = new vkbeautify().jsonmin(text); 
+*	var foo = new vkbeautify().cssmin( text [, true]); 
+*   var foo = new vkbeautify().sqlmin(text); 
 *
 */
 

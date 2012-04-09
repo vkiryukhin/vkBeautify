@@ -27,16 +27,16 @@ function minify() {
 	var ta = document.getElementById('ta');
 	var preservecomm = document.getElementById('preservews').checked;
 	if($('#mode').html() == 'XML') {
-		ta.value = preservecomm ? vkbeautify.xmlmin(ta.value,true) : vkbeautify.xmlmin(ta.value);
+		ta.value = preservecomm ? new vkbeautify().xmlmin(ta.value,true) : new vkbeautify().xmlmin(ta.value);
 	} else 
 	if($('#mode').html() == 'JSON') {
-		ta.value =  preservecomm ? vkbeautify.jsonmin(ta.value) : vkbeautify.jsonmin(ta.value);
+		ta.value =  preservecomm ? new vkbeautify().jsonmin(ta.value) : new vkbeautify().jsonmin(ta.value);
 	} else 
 	if($('#mode').html() == 'CSS') {
-		ta.value =  preservecomm ? vkbeautify.cssmin(ta.value,true) : vkbeautify.cssmin(ta.value);
+		ta.value =  preservecomm ? new vkbeautify().cssmin(ta.value,true) : new vkbeautify().cssmin(ta.value);
 	}  else 
 	if($('#mode').html() == 'SQL') {
-		ta.value =  vkbeautify.sqlmin(ta.value);
+		ta.value =  new vkbeautify().sqlmin(ta.value);
 	} 
 	countChars();
 }
