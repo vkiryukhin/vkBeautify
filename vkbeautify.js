@@ -35,9 +35,9 @@
 
 (function() {
 
-function vkbeautify(){
+function vkbeautify(step){
 	this.shift = ['\n']; // array of shifts
-	this.step = '    '; // 4 spaces
+	this.step = step ? step : '    '; 
 	var maxdeep = 100, // nesting level
 		ix = 0;
 
@@ -332,7 +332,7 @@ vkbeautify.prototype.sqlmin = function(text) {
 	return text.replace(/\s{1,}/g," ").replace(/\s{1,}\(/,"(").replace(/\s{1,}\)/,")");
 }
 
-window.vkbeautify = new vkbeautify();
+window.vkbeautify = vkbeautify;
 
 })();
 

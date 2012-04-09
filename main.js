@@ -7,17 +7,18 @@ $(document).ready(function()
 
 function beatify() {
 	var ta = document.getElementById('ta');
+	var vkb =  new vkbeautify('    ');
 	if($('#mode').html() == 'XML') {
-		ta.value =  vkbeautify.xml(ta.value);
+		ta.value =  new vkbeautify('  ').xml(ta.value);
 	} else 
 	if($('#mode').html() == 'JSON') {
-		ta.value =  vkbeautify.json(ta.value);
+		ta.value =  vkb.json(ta.value);
 	} else 
 	if($('#mode').html() == 'CSS') {
-		ta.value =  vkbeautify.css(ta.value);
+		ta.value =  new vkbeautify().css(ta.value);
 	} 
 	if($('#mode').html() == 'SQL') {
-		ta.value =  vkbeautify.sql(ta.value);
+		ta.value =  new vkbeautify().sql(ta.value);
 	} 
 	countChars();
 }
