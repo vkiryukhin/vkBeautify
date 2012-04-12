@@ -8,19 +8,15 @@ $(document).ready(function()
 function beatify() {
 	var ta = document.getElementById('ta');
 	if($('#mode').html() == 'XML') {
-		//ta.value =  vkbeautify.xml(ta.value);
-		ta.value =  vkbeautify.xml(ta.value, 2);
+		ta.value =  vkbeautify.xml(ta.value);
 	} else 
 	if($('#mode').html() == 'JSON') {
-		//ta.value =  vkbeautify.json(ta.value);
-		ta.value =  vkbeautify.json(ta.value, 4);
+		ta.value =  vkbeautify.json(ta.value);
 	} else 
 	if($('#mode').html() == 'CSS') {
-		ta.value =  vkbeautify.css(ta.value, 8);
-		//ta.value =  vkbeautify.css(ta.value);
+		ta.value =  vkbeautify.css(ta.value);
 	} 
 	if($('#mode').html() == 'SQL') {
-		//ta.value =  vkbeautify.sql(ta.value);
 		ta.value =  vkbeautify.sql(ta.value);
 	} 
 	countChars();

@@ -37,7 +37,7 @@
 (function() {
 
 function createShiftArr(step) {
-
+/*
 	var space = '';
 	switch(step) {
 		case 1: space = ' '; break;
@@ -51,19 +51,20 @@ function createShiftArr(step) {
 		case 9: space = '         '; break;
 		case 10: space = '         '; break;
 		case 11: space = '           '; break;
-		default: space = '            '; break;
+		case 12: space = '            '; break;
+		default: space = '    '; break;
 	}
-
+*/
 	var shift = ['\n']; // array of shifts
 	for(ix=0;ix<100;ix++){
-		shift.push(shift[ix]+space); 
+		shift.push(shift[ix]+step); 
 	}
 	return shift;
 }
 
 function vkbeautify(){
 	this.step = '    '; // 4 spaces
-	this.shift = createShiftArr(4);
+	this.shift = createShiftArr(this.step);
 };
 
 vkbeautify.prototype.xml = function(text,step) {
