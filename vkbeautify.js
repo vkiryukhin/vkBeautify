@@ -37,27 +37,31 @@
 (function() {
 
 function createShiftArr(step) {
-/*
-	var space = '';
-	switch(step) {
-		case 1: space = ' '; break;
-		case 2: space = '  '; break;
-		case 3: space = '   '; break;
-		case 4: space = '    '; break;
-		case 5: space = '     '; break;
-		case 6: space = '      '; break;
-		case 7: space = '       '; break;
-		case 8: space = '        '; break;
-		case 9: space = '         '; break;
-		case 10: space = '         '; break;
-		case 11: space = '           '; break;
-		case 12: space = '            '; break;
-		default: space = '    '; break;
+
+	var space = '    ';
+	
+	if ( isNaN(parseInt(step)) ) {  // argument is string
+		space = step;
+	} else { // argument is integer
+		switch(step) {
+			case 1: space = ' '; break;
+			case 2: space = '  '; break;
+			case 3: space = '   '; break;
+			case 4: space = '    '; break;
+			case 5: space = '     '; break;
+			case 6: space = '      '; break;
+			case 7: space = '       '; break;
+			case 8: space = '        '; break;
+			case 9: space = '         '; break;
+			case 10: space = '          '; break;
+			case 11: space = '           '; break;
+			case 12: space = '            '; break;
+		}
 	}
-*/
+
 	var shift = ['\n']; // array of shifts
 	for(ix=0;ix<100;ix++){
-		shift.push(shift[ix]+step); 
+		shift.push(shift[ix]+space); 
 	}
 	return shift;
 }

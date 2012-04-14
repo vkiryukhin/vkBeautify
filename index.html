@@ -71,8 +71,8 @@
 			<div id="mode">XML  </div> 	
 			 <div style="float:left; margin-left:7em;"><input id="count" type="text" size="5" /> chars</div><br clear="all"/>
 			<textarea id="ta" style="height:400px;" onclick="countChars()"></textarea>
-			<div>
-				<input type="button" onclick="beatify()" value="Pretty Print"/>
+			<!--div>
+				<input type="button" onclick="beautify()" value="Pretty Print"/>
 				<span style="display:inline-block;border:solid 1px #cccccc;padding:5px;margin-left:2em;margin-right:2em;">
 					<input type="button" onclick="minify()" value="Minify"/>
 					<input id="preservews" type="checkbox" /> 
@@ -81,8 +81,24 @@
 					</span>
 				</span>
 				<input type="button" onclick="document.getElementById('ta').value='';" value="Clear"/>
-			</div>
+			</div-->
+		<table style=""><tr>
+		<td><input type="button" onclick="beautify()" value="Pretty Print"/></td>
+		<td><span style="display:inline-block;border:solid 1px #cccccc;padding:5px;margin-left:1em;margin-right:2em;">
+					<input type="button" onclick="minify()" value="Minify"/>
+					<input id="preservews" type="checkbox" /> 
+					<span style="display:inline-block;width:7em; margin:0px;font-size:75%;">
+						Preserve Comments
+					</span>
+				</span></td>
+		<td>
+			<div style="width:8em; margin:0px;font-size:75%;">custom puttern</div>
+			<input id="custom_pattern" type="text" size="12" value=""/>
+		</td>
+		</tr></table>			
+			
 		</div>
+
 		
 		<div id="rightpanel"></div>
 	

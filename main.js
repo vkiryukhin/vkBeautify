@@ -5,19 +5,30 @@ $(document).ready(function()
 	$('#rightpanel').empty().load('html/overview.html');
 });
 
-function beatify() {
-	var ta = document.getElementById('ta');
+function beautify() {
+
+	var ta = document.getElementById('ta'),
+	    cp = document.getElementById('custom_pattern').value;
+		
+	cp = cp.replace(/\'/g,'').replace(/\"/g,'');
+	
+	if ( !isNaN(parseInt(cp)) ) {  // argument is integer
+		cp = parseInt(cp);
+	} else {
+		cp = cp ? cp : 4;
+	}
+	
 	if($('#mode').html() == 'XML') {
-		ta.value =  vkbeautify.xml(ta.value);
+		ta.value =  vkbeautify.xml(ta.value,cp);
 	} else 
 	if($('#mode').html() == 'JSON') {
-		ta.value =  vkbeautify.json(ta.value);
+		ta.value =  vkbeautify.json(ta.value,cp);
 	} else 
 	if($('#mode').html() == 'CSS') {
-		ta.value =  vkbeautify.css(ta.value);
+		ta.value =  vkbeautify.css(ta.value,cp);
 	} 
 	if($('#mode').html() == 'SQL') {
-		ta.value =  vkbeautify.sql(ta.value);
+		ta.value =  vkbeautify.sql(ta.value,cp);
 	} 
 	countChars();
 }

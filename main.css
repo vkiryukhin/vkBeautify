@@ -114,4 +114,6 @@ a:visited {color:black;}
 .h5 {margin-bottom:1em; font-weight:bold;}
 .h6 {margin-bottom:1em; font-weight:bold;text-align:center;margin-bottom:0.5em;}
 .highlight {background-color:#FFFF00;}
-.comment {color:green;}
+.comment {color:green;font-size:85%;}
+
+
