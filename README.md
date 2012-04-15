@@ -3,7 +3,7 @@
 javascript  plugin to **pretty-print** or **minify**
 text in **XML**, **JSON**, **CSS** and **SQL** formats.
 
-**Version** - 0.96.02.beta
+**Version** - 0.97.00.beta
 
 **Copyright** (c) 2012 Vadim Kiryukhin ( vkiryukhin @ gmail.com )
 
@@ -16,51 +16,38 @@ the MIT and GPL licenses:
 
 [http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html)
 
-##Description
 
-* `vkbeautify.xml(text )` - pretty print XMLtext; 
+   **Pretty print**
 
-* `vkbeautify.json(text)` - pretty print JSON text; 
+        vkbeautify.xml(text [,indent_pattern]);
+        vkbeautify.json(text [,indent_pattern]);
+        vkbeautify.css(text [,indent_pattern]);
+        vkbeautify.sql(text [,indent_pattern]);
 
-* `vkbeautify.css(text )` - pretty print CSS text; 
+        @text - String; text to beatufy;
+        @indent_pattern - Integer | String;
+                Integer:  number of white spaces;
+                String:   character string to visualize indentation ( can also be a set of white spaces )
+  **Minify**
 
-* `vkbeautify.sql(text )` - pretty print SQL text; 
+        vkbeautify.xmlmin(text [,preserve_comments]);
+        vkbeautify.jsonmin(text);
+        vkbeautify.cssmin(text [,preserve_comments]);
+        vkbeautify.sqlmin(text);
 
-* `vkbeautify.xmlmin(text [, preserveComments] ` - minify XML
-text; 
+        @text - String; text to minify;
+        @preserve_comments - Bool; [optional];
+                Set this flag to true to prevent removing comments from @text ( minxml and mincss functions only. )
 
-* `vkbeautify.jsonmin(text)` - minify JSON text;
+   **Examples**
+   
+        vkbeautify.xml(text); // pretty print XML
+        vkbeautify.json(text, 4 ); // pretty print JSON
+        vkbeautify.css(text, '. . . .'); // pretty print CSS
+        vkbeautify.sql(text, '----'); // pretty print SQL
 
-* `vkbeautify.cssmin(text [, preserveComments] )` - minify CSS text; 
-
-* `vkbeautify.sqlmin(text)` - minify SQL text;
-
-**PARAMETERS:**
-
-`@text` - String; XML, JSON or CSS text to beautify; 
-
-`@preserveComments` - 
-Bool (optional, used in vkbeautify.minxml and vkbeautify.mincss only); Set this flag
-to true to prevent removing comments from @text; 
-
-`@Return` - String;
-
-
-**USAGE:**
-
-`var xml_pp   = vkbeautify.xml(xml_text); `
-
-`var xml_min  = vkbeautify.xmlmin(xml_text [,true]);` 
-
-`var json_pp  = vkbeautify.json(json_text);` 
-
-`var json_min = vkbeautify.jsonmin(json_text);` 
-
-`var css_pp   = vkbeautify.css(css_text); `
-
-`var css_min  = vkbeautify.cssmin(css\text [, true]);`
-
-`var sql_pp  = vkbeautify.sql(sql_text);` 
-
-`var sql_min = vkbeautify.sqlmin(sql_text);` 
+        vkbeautify.xmlmin(text, true);// minify XML, preserve comments
+        vkbeautify.jsonmin(text);// minify JSON
+        vkbeautify.cssmin(text);// minify CSS, remove comments ( default )
+        vkbeautify.sqlmin(text);// minify SQL
 

@@ -10,27 +10,38 @@
 *   http://www.opensource.org/licenses/mit-license.php
 *   http://www.gnu.org/licenses/gpl.html
 *
-*	vkbeautify.xml|json|css|sql(text ) - pretty print XML, JSON, CSS or SQL text;
-*	vkbeautify.xmlmin|jsonmin|cssmin|sqlmin(text, preserveComments ) - minify XML, JSON, CSS or SQL text; 
+*   Pretty print
 *
-* PARAMETERS:
+*        vkbeautify.xml(text [,indent_pattern]);
+*        vkbeautify.json(text [,indent_pattern]);
+*        vkbeautify.css(text [,indent_pattern]);
+*        vkbeautify.sql(text [,indent_pattern]);
 *
-*	@text  				- String; text to beautify;
-*   @step				- Integer; indent size unit (default is 4 spaces) ;
-* 	@preserveComments	- Bool (optional, used in minxml and mincss only); 
-*						  Set this flag to true to prevent removing comments from @text; 
-*	@Return 			- String;
-*	
-* USAGE:
-*	
-*	var foo = vkbeautify.xml(text); 
-*	var foo = vkbeautify.json(text [,4]); 
-*	var foo = vkbeautify.css(text [,8]); 
-*	var foo = vkbeautify.sql(text [,2]); 
-*	var foo = vkbeautify.xmlmin( text [, true]); 
-*	var foo = vkbeautify.jsonmin(text); 
-*	var foo = vkbeautify.cssmin( text [, true]); 
-*   var foo = vkbeautify.sqlmin(text); 
+*        @text - String; text to beatufy;
+*        @indent_pattern - Integer | String;
+*                Integer:  number of white spaces;
+*                String:   character string to visualize indentation ( can also be a set of white spaces )
+*   Minify
+*
+*        vkbeautify.xmlmin(text [,preserve_comments]);
+*        vkbeautify.jsonmin(text);
+*        vkbeautify.cssmin(text [,preserve_comments]);
+*        vkbeautify.sqlmin(text);
+*
+*        @text - String; text to minify;
+*        @preserve_comments - Bool; [optional];
+*                Set this flag to true to prevent removing comments from @text ( minxml and mincss functions only. )
+*
+*   Examples:
+*        vkbeautify.xml(text); // pretty print XML
+*        vkbeautify.json(text, 4 ); // pretty print JSON
+*        vkbeautify.css(text, '. . . .'); // pretty print CSS
+*        vkbeautify.sql(text, '----'); // pretty print SQL
+*
+*        vkbeautify.xmlmin(text, true);// minify XML, preserve comments
+*        vkbeautify.jsonmin(text);// minify JSON
+*        vkbeautify.cssmin(text);// minify CSS, remove comments ( default )
+*        vkbeautify.sqlmin(text);// minify SQL
 *
 */
 
