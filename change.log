@@ -10,6 +10,9 @@ This software has been released under the MIT license:
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
   
+  	Version 0.97.beta
+		New feature: optional custom indent pattern.
+  
 	Version 0.96.beta
 		New functionality: pretty-print and minify SQL.
 		
