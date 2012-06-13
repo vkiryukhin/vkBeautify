@@ -90,10 +90,7 @@ function loadTemplate(name)
 		case 'basic':
 			$('#ta').width(400);
 			$('#leftpanel').show();
-			document.getElementById('ta').value = '<?xml version="1.0" encoding="UTF-8" ?>'
-												+ '<!DOCTYPE foo SYSTEM "Foo.dtd"><a><b>bbb</b><c/>'
-												+ '<d><!-- comment --></d><e><![CDATA[ <z></z> ]]>'
-												+ '</e><f><g>   </g></f></a>';
+			document.getElementById('ta').value = '<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE foo SYSTEM "Foo.dtd"><a><b>bbb</b><c/><d><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></soapenv></d><e><![CDATA[ <z></z> ]]></e><f><g></g></f></a>';
 			$('#rightpanel').empty().load('html/basic.html');
 			$('#mode').html('XML');
 			countChars();

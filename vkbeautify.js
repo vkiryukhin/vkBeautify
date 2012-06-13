@@ -84,7 +84,10 @@ function vkbeautify(){
 
 vkbeautify.prototype.xml = function(text,step) {
 
-	var ar = text.replace(/>\s{0,}</g,"><").replace(/</g,"~::~<").split('~::~'),
+	var ar = text.replace(/>\s{0,}</g,"><")
+				 .replace(/</g,"~::~<")
+				 .replace(/xmlns/g,"~::~xmlns:")
+				 .split('~::~'),
 		len = ar.length,
 		inComment = false,
 		deep = 0,
@@ -132,7 +135,13 @@ vkbeautify.prototype.xml = function(text,step) {
 			// <? xml ... ?> //
 			if(ar[ix].search(/<\?/) > -1) { 
 				str += shift[deep]+ar[ix];
-			} else {
+			} else 
+			// xmlns: //
+			if(ar[ix].search(/xmlns/) > -1) { 
+				str += shift[deep]+ar[ix];
+			} 
+			
+			else {
 				str += ar[ix];
 			}
 		}
