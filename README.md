@@ -3,7 +3,7 @@
 javascript  plugin to **pretty-print** or **minify**
 text in **XML**, **JSON**, **CSS** and **SQL** formats.
 
-**Version** - 0.97.00.beta
+**Version** - 0.98.00.beta
 
 **Copyright** (c) 2012 Vadim Kiryukhin ( vkiryukhin @ gmail.com )
 
