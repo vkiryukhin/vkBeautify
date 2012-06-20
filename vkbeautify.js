@@ -153,6 +153,8 @@ vkbeautify.prototype.xml = function(text,step) {
 vkbeautify.prototype.json = function(text,step) {
 
     // Attempt to process using the native JSON first
+	var step = step ? step : this.step;
+	
     if ( window.JSON && window.JSON.stringify ) {
 		if ( typeof text === "string" ) {
 			return JSON.stringify(JSON.parse(text), null, step);
