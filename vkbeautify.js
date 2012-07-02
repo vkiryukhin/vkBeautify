@@ -256,7 +256,7 @@ function split_sql(str, tab) {
 				.replace(/ FROM /ig,"~::~FROM ")
 				.replace(/ GROUP\s{1,}BY/ig,"~::~GROUP BY ")
 				.replace(/ HAVING /ig,"~::~HAVING ")
-				//.replace(/ IN /ig,"~::~"+tab+"IN ")
+				//.replace(/ SET /ig," SET~::~")
 				.replace(/ IN /ig," IN ")
 				
 				.replace(/ JOIN /ig,"~::~JOIN ")
@@ -293,6 +293,8 @@ function split_sql(str, tab) {
 				.replace(/ NULL /ig," NULL ")
 				.replace(/ LIKE /ig," LIKE ")
 				.replace(/\s{0,}SELECT /ig,"SELECT ")
+				.replace(/\s{0,}UPDATE /ig,"UPDATE ")
+				.replace(/ SET /ig," SET ")
 							
 				.replace(/~::~{1,}/g,"~::~")
 				.split('~::~');
@@ -330,7 +332,11 @@ vkbeautify.prototype.sql = function(text,step) {
 			if( /\s{0,}\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
 				ar[ix] = ar[ix].replace(/\,/g,",\n"+tab+tab+"")
 			} 
-		
+			
+			if( /\s{0,}\s{0,}SET\s{0,}/.exec(ar[ix]))  { 
+				ar[ix] = ar[ix].replace(/\,/g,",\n"+tab+tab+"")
+			} 
+			
 			if( /\s{0,}\(\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
 				deep++;
 				str += shift[deep]+ar[ix];
