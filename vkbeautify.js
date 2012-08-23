@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin to pretty-print or minify text in XML, JSON, CSS and SQL formats.
 *  
-* Version - 0.98.01.beta 
+* Version - 0.99.00.beta 
 * Copyright (c) 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautify/
@@ -86,8 +86,8 @@ vkbeautify.prototype.xml = function(text,step) {
 
 	var ar = text.replace(/>\s{0,}</g,"><")
 				 .replace(/</g,"~::~<")
-				 .replace(/xmlns\:/g,"~::~xmlns:")
-				 .replace(/xmlns\=/g,"~::~xmlns=")
+				 .replace(/\s*xmlns\:/g,"~::~xmlns:")
+				 .replace(/\s*xmlns\=/g,"~::~xmlns=")
 				 .split('~::~'),
 		len = ar.length,
 		inComment = false,
@@ -152,56 +152,14 @@ vkbeautify.prototype.xml = function(text,step) {
 
 vkbeautify.prototype.json = function(text,step) {
 
-    // Attempt to process using the native JSON first
 	var step = step ? step : this.step;
 	
-    if ( window.JSON && window.JSON.stringify ) {
-		if ( typeof text === "string" ) {
-			return JSON.stringify(JSON.parse(text), null, step);
-		}
-		if ( typeof text === "object" ) {
-			return JSON.stringify(text, null, step);
-		}
-		return null;
-    }
-
-	// there is no native JSON object, so let's use regexp
+	if (typeof JSON === 'undefined' ) return text; 
 	
-	if ( typeof text !== "string" || !text )  return null;
-
-	var ar = this.jsonmin(text).replace(/\{/g,"~::~{~::~")
-								.replace(/\[/g,"[~::~")
-								.replace(/\}/g,"~::~}")
-								.replace(/\]/g,"~::~]")
-								.replace(/\"\,/g,'",~::~')
-								.replace(/\,\"/g,',~::~"')
-								.replace(/\]\,/g,'],~::~')
-								.replace(/~::~\s{0,}~::~/g,"~::~")
-								.split('~::~'),
-				
-		len = ar.length,
-		deep = 0,
-		str = '',
-		ix = 0,
-		shift = step ? createShiftArr(step) : this.shift;;
-
-	for(ix=0;ix<len;ix++) {
-		if( /\{/.exec(ar[ix]))  { 
-			str += shift[deep++]+ar[ix];
-		} else 
-		if( /\[/.exec(ar[ix]))  { 
-			str += shift[deep++]+ar[ix];
-		}  else 
-		if( /\]/.exec(ar[ix]))  { 
-			str += shift[--deep]+ar[ix];
-		}  else 
-		if( /\}/.exec(ar[ix]))  { 
-			str += shift[--deep]+ar[ix];
-		} else {
-			str += shift[deep]+ar[ix];
-		}
-	}
-	return str.replace(/^\n{1,}/,'');
+	if ( typeof text === "string" ) return JSON.stringify(JSON.parse(text), null, step);
+	if ( typeof text === "object" ) return JSON.stringify(text, null, step);
+		
+	return text; // text is not string nor object
 }
 
 vkbeautify.prototype.css = function(text, step) {
@@ -370,21 +328,11 @@ vkbeautify.prototype.xmlmin = function(text, preserveComments) {
 }
 
 vkbeautify.prototype.jsonmin = function(text) {
-								  
-	return  text.replace(/\s{0,}\{\s{0,}/g,"{")
-				.replace(/\s{0,}\[$/g,"[")
-				.replace(/\[\s{0,}/g,"[")
-				.replace(/:\s{0,}\[/g,':[')
-		  		.replace(/\s{0,}\}\s{0,}/g,"}")
-				.replace(/\s{0,}\]\s{0,}/g,"]")
-				.replace(/\"\s{0,}\,/g,'",')
-				.replace(/\,\s{0,}\"/g,',"')
-				.replace(/\"\s{0,}:/g,'":')
-				.replace(/:\s{0,}\"/g,':"')
-				.replace(/:\s{0,}\[/g,':[')
-				.replace(/\,\s{0,}\[/g,',[')
-				.replace(/\,\s{2,}/g,', ')
-				.replace(/\]\s{0,},\s{0,}\[/g,'],[');							  
+
+	if (typeof JSON === 'undefined' ) return text; 
+	
+	return JSON.stringify(JSON.parse(text), null, 0); 
+				
 }
 
 vkbeautify.prototype.cssmin = function(text, preserveComments) {
