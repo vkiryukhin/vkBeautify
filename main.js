@@ -99,7 +99,8 @@ function loadTemplate(name)
 			$('#ta').width(800);
 			$('#leftpanel').show();
 			document.getElementById('ta').value = 'Loading Yahoo RSS . . . ';
-			getWebService('http://weather.yahooapis.com/forecastrss?w=2459115')
+			//getWebService('http://weather.yahooapis.com/forecastrss?w=2459115')
+			getWebService('http://teaching.cs.uml.edu/~heines/netscout/examples/course.xml');
 			$('#rightpanel').empty();
 			$('#mode').html('XML');
 			break;
