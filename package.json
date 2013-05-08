@@ -1,0 +1,19 @@
+{
+    "name": "vkbeautify",
+    "version": "0.99.0",
+    "author": "Vadim Kiryukhin <vkiryukhin@gmail.com>",
+    "description": "javascript plugin to pretty-print or minify text in XML, JSON, CSS and SQL formats",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/rappid/rAppid.js.git"
+    },
+    "keywords": [
+        "vkbeautify", "pretty", "print"
+    ],
+    "devDependencies": {
+        "mocha": "latest",
+        "chai": "latest"
+    },
+    "license": "MIT",
+    "homepage": "http://www.eslinstructor.net/vkbeautify/"
+}

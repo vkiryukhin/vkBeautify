@@ -1,0 +1,10 @@
+html
+php
+test
+node_modules
+change.log
+jquery*.js
+main.js
+*.html
+*.css
+*.iml
