@@ -95,7 +95,7 @@ vkbeautify.prototype.xml = function(text,step) {
 		str = '',
 		ix = 0,
 		shift = step ? createShiftArr(step) : this.shift,
-		withNamespace = false;
+		withNamespace = 0;
 
 		for(ix=0;ix<len;ix++) {
 			// start comment or <![CDATA[...]]> or <!DOCTYPE //
@@ -130,11 +130,12 @@ vkbeautify.prototype.xml = function(text,step) {
 			if(ar[ix].search(/<\//) > -1) { 
 				--deep;
 				str = !inComment && !withNamespace? str += shift[deep] + ar[ix] : str += ar[ix];
-				withNamespace = false;
 			} else 
 			// <elm/> //
 			if(ar[ix].search(/\/>/) > -1 ) { 
 				str = !inComment ? str += shift[deep]+ar[ix] : str += ar[ix];
+				if (ar[ix].search(/xmlns\:/) > -1  || ar[ix].search(/xmlns\=/) > -1)
+			        deep--;
 			} else 
 			// <? xml ... ?> //
 			if(ar[ix].search(/<\?/) > -1) { 
@@ -143,12 +144,14 @@ vkbeautify.prototype.xml = function(text,step) {
 			// xmlns //
 			if( ar[ix].search(/xmlns\:/) > -1  || ar[ix].search(/xmlns\=/) > -1) { 
 				str += shift[deep]+ar[ix];
-				withNamespace = true;
+				withNamespace = 2;
 			} 
 			
 			else {
 				str += ar[ix];
 			}
+			if (withNamespace)
+				withNamespace--;
 		}
 		
 	return  (str[0] == '\n') ? str.slice(1) : str;
