@@ -1,8 +1,8 @@
 /**
 * vkBeautify - javascript plugin to pretty-print or minify text in XML, JSON, CSS and SQL formats.
 *  
-* Version - 0.99.00.beta 
-* Copyright (c) 2012 Vadim Kiryukhin
+* Version - 1.00.01.regexp
+* Copyright (c) 2013 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautify/
 * 
