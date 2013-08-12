@@ -152,14 +152,42 @@ vkbeautify.prototype.xml = function(text,step) {
 
 vkbeautify.prototype.json = function(text,step) {
 
-	var step = step ? step : this.step;
-	
-	if (typeof JSON === 'undefined' ) return text; 
-	
-	if ( typeof text === "string" ) return JSON.stringify(JSON.parse(text), null, step);
-	if ( typeof text === "object" ) return JSON.stringify(text, null, step);
-		
-	return text; // text is not string nor object
+	var ar = this.jsonmin(text).replace(/\{/g,"~::~{~::~")
+								.replace(/\[/g,"[~::~")
+								.replace(/\}/g,"~::~}")
+								.replace(/\]/g,"~::~]")
+								
+								.replace(/\,/g,',~::~')
+								
+								.replace(/\"\,/g,'",~::~')
+								.replace(/\,\"/g,',~::~"')
+								.replace(/\]\,/g,'],~::~')
+								.replace(/~::~\s{0,}~::~/g,"~::~")
+								.split('~::~'),
+
+		len = ar.length,
+		deep = 0,
+		str = '',
+		ix = 0,
+		shift = step ? createShiftArr(step) : this.step;
+
+	for(ix=0;ix<len;ix++) {
+		if( /\{/.exec(ar[ix]))  { 
+			str += shift[deep++]+ar[ix];
+		} else 
+		if( /\[/.exec(ar[ix]))  { 
+			str += shift[deep++]+ar[ix];
+		}  else 
+		if( /\]/.exec(ar[ix]))  { 
+			str += shift[--deep]+ar[ix];
+		}  else 
+		if( /\}/.exec(ar[ix]))  { 
+			str += shift[--deep]+ar[ix];
+		} else {
+			str += shift[deep]+ar[ix];
+		}
+	}
+	return str.replace(/^\n{1,}/,'');	
 }
 
 vkbeautify.prototype.css = function(text, step) {
@@ -329,10 +357,20 @@ vkbeautify.prototype.xmlmin = function(text, preserveComments) {
 
 vkbeautify.prototype.jsonmin = function(text) {
 
-	if (typeof JSON === 'undefined' ) return text; 
-	
-	return JSON.stringify(JSON.parse(text), null, 0); 
-				
+	return  text.replace(/\s{0,}\{\s{0,}/g,"{")
+				.replace(/\s{0,}\[$/g,"[")
+				.replace(/\[\s{0,}/g,"[")
+				.replace(/:\s{0,}\[/g,':[')
+		  		.replace(/\s{0,}\}\s{0,}/g,"}")
+				.replace(/\s{0,}\]\s{0,}/g,"]")
+				.replace(/\"\s{0,}\,/g,'",')
+				.replace(/\,\s{0,}\"/g,',"')
+				.replace(/\"\s{0,}:/g,'":')
+				.replace(/:\s{0,}\"/g,':"')
+				.replace(/:\s{0,}\[/g,':[')
+				.replace(/\,\s{0,}\[/g,',[')
+				.replace(/\,\s{2,}/g,', ')
+				.replace(/\]\s{0,},\s{0,}\[/g,'],[');	
 }
 
 vkbeautify.prototype.cssmin = function(text, preserveComments) {
