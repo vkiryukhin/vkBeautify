@@ -13,7 +13,10 @@
 *   Pretty print
 *
 *        vkbeautify.xml(text [,indent_pattern]);
+*
 *        vkbeautify.json(text [,indent_pattern]);
+*        vkbeautify.json(text [,int_number_spaces]);
+*
 *        vkbeautify.css(text [,indent_pattern]);
 *        vkbeautify.sql(text [,indent_pattern]);
 *
@@ -152,7 +155,9 @@ vkbeautify.prototype.xml = function(text,step) {
 
 vkbeautify.prototype.json = function(text,step) {
 
-	var ar = this.jsonmin(text).replace(/\{/g,"~::~{~::~")
+	var ar =  this.jsonmin(text).replace(/:/g,": ")
+								.replace(/\{/g,"{~::~")
+								
 								.replace(/\[/g,"[~::~")
 								.replace(/\}/g,"~::~}")
 								.replace(/\]/g,"~::~]")
