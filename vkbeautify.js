@@ -178,16 +178,16 @@ vkbeautify.prototype.json = function(text,step) {
 		shift = step ? createShiftArr(step) : createShiftArr(4);
 
 	for(ix=0;ix<len;ix++) {
-		if( /\{/.exec(ar[ix]))  { 
+		if( /^\{|\{$/.exec(ar[ix]))  { 
 			str += shift[deep++]+ar[ix];
 		} else 
-		if( /\[/.exec(ar[ix]))  { 
+		if( /^\[|\[$/.exec(ar[ix]))  {
 			str += shift[deep++]+ar[ix];
 		}  else 
-		if( /\]/.exec(ar[ix]))  { 
+		if( /^\]|\]$/.exec(ar[ix]))  { 
 			str += shift[--deep]+ar[ix];
 		}  else 
-		if( /\}/.exec(ar[ix]))  { 
+		if( /^\}|\}$/.exec(ar[ix]))  { 
 			str += shift[--deep]+ar[ix];
 		} else {
 			str += shift[deep]+ar[ix];

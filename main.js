@@ -23,6 +23,7 @@ function beautify() {
 	} else 
 	if($('#mode').html() == 'JSON') {
 		ta.value =  vkbeautify.json(ta.value,cp);
+		//ta.value =  JSON2.stringify(JSON2.parse(ta.value), null, '    ');
 	} else 
 	if($('#mode').html() == 'CSS') {
 		ta.value =  vkbeautify.css(ta.value,cp);
@@ -118,7 +119,8 @@ function loadTemplate(name)
 			$('#ta').width(400);
 			$('#leftpanel').show();
 			document.getElementById('ta').value = '{"menu":{"id": "file","value": [1,2,3],"popup":{"menuitem":[{"value":["one","two"],'
-													+'"onclick":"CreateNewDoc()"},{"value":"Close","onclick":"CloseDoc()"}]}}}';
+							//+'"onclick":"foo()"},{"value":"Close","onclick":"CloseDoc()"}]}}}';
+							+'"onclick":"^[0-9]{1,8}$"},{"value":"Close","onclick":"CloseDoc()"}]}}}';
 			$('#rightpanel').empty().load('html/basic.html');
 			$('#mode').html('JSON');
 			countChars();
