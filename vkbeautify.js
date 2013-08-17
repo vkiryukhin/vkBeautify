@@ -155,20 +155,21 @@ vkbeautify.prototype.xml = function(text,step) {
 
 vkbeautify.prototype.json = function(text,step) {
 
-	var ar =  this.jsonmin(text).replace(/:/g,": ")
-								.replace(/\{/g,"{~::~")
-								
-								.replace(/\[/g,"[~::~")
-								.replace(/\}/g,"~::~}")
-								.replace(/\]/g,"~::~]")
-								
-								.replace(/\,/g,',~::~')
-								
-								.replace(/\"\,/g,'",~::~')
-								.replace(/\,\"/g,',~::~"')
-								.replace(/\]\,/g,'],~::~')
-								.replace(/~::~\s{0,}~::~/g,"~::~")
-								.split('~::~'),
+	var ar =  this.jsonmin(text)
+					.replace(/:/g,": ")
+					.replace(/\{/g,"{~::~")
+					.replace(/\[/g,"[~::~")
+					.replace(/\}/g,"~::~}")
+					.replace(/\]/g,"~::~]")
+					.replace(/\,/g,',~::~')
+					.replace(/\"\,/g,'",~::~')
+					.replace(/\,\"/g,',~::~"')
+					.replace(/\]\,/g,'],~::~')
+					.replace(/~::~\s{0,}~::~/g,"~::~")
+		// removes ~::~ inside "..", ignores escaped \", 
+		// so, it works fine for a string like this: "... \"...\"..."
+					.replace(/~::~(?=(?:(?:[^\\"]|\\"|\\\\)*"(?:[^\\"]|\\"|\\\\)*")*(?:[^\\"]|\\"|\\\\)*"(?:[^\\"]|\\"|\\\\)*$)/g, "")
+					.split('~::~'),
 
 		len = ar.length,
 		deep = 0,
