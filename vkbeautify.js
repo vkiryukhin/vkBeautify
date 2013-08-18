@@ -156,7 +156,6 @@ vkbeautify.prototype.xml = function(text,step) {
 vkbeautify.prototype.json = function(text,step) {
 
 	var ar =  this.jsonmin(text)
-					.replace(/:/g,": ")
 					.replace(/\{/g,"{~::~")
 					.replace(/\[/g,"[~::~")
 					.replace(/\}/g,"~::~}")
