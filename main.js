@@ -117,8 +117,8 @@ function loadTemplate(name)
 		case 'basicjson':
 			$('#ta').width(400);
 			$('#leftpanel').show();
-			document.getElementById('ta').value = '{"menu":{"id": "file","value": [1,2,3],"popup":{"menuitem":[{"value":["one","two"],'
-							+'"onclick":"^[0-9]{1,8}$"},{"value":"Close","onclick":"CloseDoc()"}]}}}';
+			document.getElementById('ta').value = '{"menu":{"id": "file","value": [12345678901234567891,2,3],"popup":{"menuitem":[{"value":["one","two"],'
+							+'"onclick":"^[0-9]{1,8}$"},{"value":"12345678901234567890123","onclick":"CloseDoc()"}]}}}';
 			$('#rightpanel').empty().load('html/basic.html');
 			$('#mode').html('JSON');
 			countChars();

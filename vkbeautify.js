@@ -1,7 +1,7 @@
 /**
 * vkBeautify - javascript plugin to pretty-print or minify text in XML, JSON, CSS and SQL formats.
 *  
-* Version - 1.1.00.regexp 08/2013
+* Version - 2.0.00.regexp 08/2013
 * Copyright (c) 2013 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautify/
@@ -154,45 +154,41 @@ vkbeautify.prototype.xml = function(text,step) {
 }
 
 vkbeautify.prototype.json = function(text,step) {
+	
+	var step = typeof step === 'undefined' ? this.step : step,
+			arrBody = [],
+			arrNums = [],
+			str = '',
+			delimiter = 1.234567890098765,
+			ix;
+			
+	if (typeof JSON === 'undefined' ) {	return text }
+	if (typeof text === "object"    ) { return JSON.stringify(text, null, step) }
 
-	var ar =  this.jsonmin(text)
-					.replace(/\{/g,"{~::~")
-					.replace(/\[/g,"[~::~")
-					.replace(/\}/g,"~::~}")
-					.replace(/\]/g,"~::~]")
-					.replace(/\,/g,',~::~')
-					.replace(/\"\,/g,'",~::~')
-					.replace(/\,\"/g,',~::~"')
-					.replace(/\]\,/g,'],~::~')
-					.replace(/~::~\s{0,}~::~/g,"~::~")
-		// removes ~::~ inside "..", ignores escaped \", 
-		// so, it works fine for a string like this: "... \"...\"..."
-					.replace(/~::~(?=(?:(?:[^\\"]|\\"|\\\\)*"(?:[^\\"]|\\"|\\\\)*")*(?:[^\\"]|\\"|\\\\)*"(?:[^\\"]|\\"|\\\\)*$)/g, "")
-					.split('~::~'),
-
-		len = ar.length,
-		deep = 0,
-		str = '',
-		ix = 0,
-		shift = step ? createShiftArr(step) : createShiftArr(4);
-
-	for(ix=0;ix<len;ix++) {
-		if( /^\{|\{$/.exec(ar[ix]))  { 
-			str += shift[deep++]+ar[ix];
-		} else 
-		if( /^\[|\[$/.exec(ar[ix]))  {
-			str += shift[deep++]+ar[ix];
-		}  else 
-		if( /^\]|\]$/.exec(ar[ix]))  { 
-			str += shift[--deep]+ar[ix];
-		}  else 
-		if( /^\}|\}$/.exec(ar[ix]))  { 
-			str += shift[--deep]+ar[ix];
-		} else {
-			str += shift[deep]+ar[ix];
+	if ( typeof text === "string" ) {
+		
+		// save original invalid numbers in array and replace them //
+		// with valid delimiter to let JSON to process the string //
+		text = text.replace(/[0-9]{17,32}/g, function(match){
+				arrNums.push(match); 
+				return delimiter; 
+			});
+		
+		// beautify json string with delimiters instead of original numbers //
+		text = JSON.stringify(JSON.parse(text), null, step);
+		
+		//split the string into array//
+		arrBody = text.split(delimiter.toString()); 
+		
+		//restore original numbers//
+		for(ix=0; ix<arrNums.length; ix++){
+			str += arrBody[ix]+arrNums[ix];
 		}
+					
+		return str+arrBody[ix];
 	}
-	return str.replace(/^\n{1,}/,'');	
+
+	return text; 
 }
 
 vkbeautify.prototype.css = function(text, step) {
@@ -360,22 +356,8 @@ vkbeautify.prototype.xmlmin = function(text, preserveComments) {
 	return  str.replace(/>\s{0,}</g,"><"); 
 }
 
-vkbeautify.prototype.jsonmin = function(text) {
-
-	return  text.replace(/\s{0,}\{\s{0,}/g,"{")
-				.replace(/\s{0,}\[$/g,"[")
-				.replace(/\[\s{0,}/g,"[")
-				.replace(/:\s{0,}\[/g,':[')
-		  		.replace(/\s{0,}\}\s{0,}/g,"}")
-				.replace(/\s{0,}\]\s{0,}/g,"]")
-				.replace(/\"\s{0,}\,/g,'",')
-				.replace(/\,\s{0,}\"/g,',"')
-				.replace(/\"\s{0,}:/g,'":')
-				.replace(/:\s{0,}\"/g,':"')
-				.replace(/:\s{0,}\[/g,':[')
-				.replace(/\,\s{0,}\[/g,',[')
-				.replace(/\,\s{2,}/g,', ')
-				.replace(/\]\s{0,},\s{0,}\[/g,'],[');	
+vkbeautify.prototype.jsonmin = function(text) { 
+	return this.json(text,0) 
 }
 
 vkbeautify.prototype.cssmin = function(text, preserveComments) {
