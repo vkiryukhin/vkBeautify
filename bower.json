@@ -1,0 +1,37 @@
+{
+  "name": "vkbeautify",
+  "version": "0.99.0.1",
+  "authors": [
+    "Vadim Kiryukhin <vkiryukhin@gmail.com>"
+  ],
+  "description": "javascript plugin to pretty-print or minify text in XML, JSON, CSS and SQL formats",
+  "license": "MIT",
+  "homepage": "http://www.eslinstructor.net/vkbeautify/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vkiryukhin/vkBeautify.git"
+  },
+  "keywords": [
+    "vkbeautify",
+    "pretty",
+    "print",
+    "xml",
+    "css",
+    "json",
+    "css",
+    "sql"
+  ],
+  "dependencies": {},
+  "ignore": [
+    ".bowerrc",
+    ".gitignore",
+    "html",
+    "php",
+    "change.log",
+    "index.html",
+    "jquery.1.5.0.js",
+    "main.css",
+    "main.js",
+    "README.md"
+  ]
+}
