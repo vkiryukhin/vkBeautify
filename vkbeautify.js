@@ -314,7 +314,7 @@ vkbeautify.prototype.sql = function(text,step) {
 			var junk = 0;
 		}
 
-		str = str.replace(/^\n{1,}/,'').replace(/\n{1,}/g,"\n");
+		str = str.replace(/^\n{1,}/,'').replace(/\n{1,}/g,"\n").replace(/;/g, ";\n\n");
 		return str;
 }
 
