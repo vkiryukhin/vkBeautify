@@ -6,9 +6,8 @@
 * vkiryukhin @ gmail.com
 * http://www.eslinstructor.net/vkbeautify/
 * 
-* Dual licensed under the MIT and GPL licenses:
+* MIT license:
 *   http://www.opensource.org/licenses/mit-license.php
-*   http://www.gnu.org/licenses/gpl.html
 *
 *   Pretty print
 *
@@ -78,7 +77,7 @@ function createShiftArr(step) {
 }
 
 function vkbeautify(){
-	this.step = '    '; // 4 spaces
+	this.step = '\t'; // 4 spaces
 	this.shift = createShiftArr(this.step);
 };
 
