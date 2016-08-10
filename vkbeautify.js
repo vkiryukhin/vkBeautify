@@ -70,7 +70,7 @@ function createShiftArr(step) {
 	}
 
 	var shift = ['\n']; // array of shifts
-	for(ix=0;ix<100;ix++){
+	for(var ix=0;ix<100;ix++){
 		shift.push(shift[ix]+space); 
 	}
 	return shift;
