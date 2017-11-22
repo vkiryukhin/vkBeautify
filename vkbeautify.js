@@ -126,6 +126,12 @@ vkbeautify.prototype.xml = function(text,step) {
 			} else 
 			// </elm> //
 			if(ar[ix].search(/<\//) > -1) { 
+				// xmls ... />
+				if(ar[ix-1] &&
+					(ar[ix-1].search(/xmlns\:/) > -1  || ar[ix-1].search(/xmlns\=/) > -1) &&
+					ar[ix-1].search(/\/>/) > -1) {
+					deep--;
+				}
 				str = !inComment ? str += shift[--deep]+ar[ix] : str += ar[ix];
 			} else 
 			// <elm/> //
