@@ -252,7 +252,7 @@ function split_sql(str, tab) {
 				.replace(/\s{0,}SELECT /ig,"SELECT ")
 				.replace(/\s{0,}UPDATE /ig,"UPDATE ")
 				.replace(/ SET /ig," SET ")
-                .replace(/EXPLAIN\s{0,}/ig,"EXPLAIN ")
+				.replace(/EXPLAIN\s{0,}/ig,"EXPLAIN ")
 
 				.replace(/~::~{1,}/g,"~::~")
 				.split('~::~');
