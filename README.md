@@ -9,13 +9,9 @@ text in **XML**, **JSON**, **CSS** and **SQL** formats.
 
 **Home page:** [http://www.eslinstructor.net/vkbeautify/](http://www.eslinstructor.net/vkbeautify/) 
 
-**License:** Dual licensed under
-the MIT and GPL licenses:
+**License:** MIT
 
 [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
-
-[http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html)
-
 
    **Pretty print**
 
