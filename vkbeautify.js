@@ -259,7 +259,8 @@ function split_sql(str, tab) {
 
 vkbeautify.prototype.sql = function(text,step) {
 
-	var ar_by_quote = text.replace(/\s{1,}/g," ")
+	var ar_by_quote = text.replace(/\/\*.*?\*\/|--.*?\n/g, '$&~::~')
+							.replace(/\s{1,}/g," ")
 							.replace(/\'/ig,"~::~\'")
 							.split('~::~'),
 		len = ar_by_quote.length,
@@ -313,7 +314,7 @@ vkbeautify.prototype.sql = function(text,step) {
 			var junk = 0;
 		}
 
-		str = str.replace(/^\n{1,}/,'').replace(/\n{1,}/g,"\n");
+		str = str.replace(/^\n{1,}/,'').replace(/\n{1,}/g,"\n").replace(/;/g, ";\n\n");
 		return str;
 }
 
